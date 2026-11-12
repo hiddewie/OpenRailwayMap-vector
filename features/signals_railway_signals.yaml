@@ -6941,7 +6941,7 @@ features:
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:height', value: 'dwarf' }
       - { tag: 'railway:signal:main:arrangement', value: 'vertical' }
-      - { tag: 'railway:signal:main:deactivated'}
+      - { tag: 'railway:signal:main:deactivated' }
 
   - description: Carré
     country: FR
@@ -6978,7 +6978,7 @@ features:
       - { tag: 'railway:signal:main', value: 'FR:C' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:height', value: 'dwarf' }
-      - { tag: 'railway:signal:main:deactivated'}
+      - { tag: 'railway:signal:main:deactivated' }
 
   - description: Carré
     country: FR
@@ -7001,7 +7001,7 @@ features:
           - { exact: 'FR:PR', value: 'fr/plates/PR' }
         position: bottom
     tags:
-      - { tag: 'railway:signal:main', value: 'FR:C' }
+      - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:height', value: 'dwarf' }
 
@@ -7016,7 +7016,7 @@ features:
       - { tag: 'railway:signal:main', value: 'FR:C' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:function', value: 'intermediate' }
-      - { tag: 'railway:signal:main:deactivated'}
+      - { tag: 'railway:signal:main:deactivated' }
 
   - description: Signal Intermediaire (2TMV)
     country: FR
@@ -7041,51 +7041,6 @@ features:
 
   - description: Carré (Annulé)
     country: FR
-    exampleIcon: 'fr/signals/examples/C-deactivated'
-    icon:
-      - default: 'fr/signals/C'
-      - default: 'fr/signals/aspects/C-cache'
-      - default: 'fr/plates/ID_Nf'
-        position: bottom
-      - match: 'railway:signal:main:type'
-        cases:
-          - { exact: 'FR:BM', value: 'fr/plates/BM' }
-          - { exact: 'FR:PR', value: 'fr/plates/PR' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:main', value: 'FR:C' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:shape', value: 'FR:C' }
-      - { tag: 'railway:signal:main:deactivated'}
-
-  - description: Carré
-    country: FR
-    exampleIcon: 'fr/signals/examples/C-C'
-    icon:
-      - default: 'fr/signals/C'
-      - default: 'fr/signals/aspects/C-cache'
-      - match: 'railway:signal:main:states'
-        cases:
-          - { exact: 'off', value: 'fr/signals/aspects/C-cache' }
-          - { exact: 'FR:C', value: 'fr/signals/aspects/C-C' }
-          - { any: [ 'FR:A', 'FR:(A)' ], value: 'fr/signals/aspects/C-A' }
-          - { any: [ 'FR:VL', 'FR:(VL)' ], value: 'fr/signals/aspects/C-VL' }
-          - { any: [ 'FR:S', 'FR:(S)' ], value: 'fr/signals/aspects/C-S' }
-        default: 'fr/signals/aspects/C-C'
-      - default: 'fr/plates/ID_Nf'
-        position: bottom
-      - match: 'railway:signal:main:type'
-        cases:
-          - { exact: 'FR:BM', value: 'fr/plates/BM' }
-          - { exact: 'FR:PR', value: 'fr/plates/PR' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:main', value: 'FR:C' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:shape', value: 'FR:C' }
-
-  - description: Carré (Annulé)
-    country: FR
     exampleIcon: 'fr/signals/examples/F-deactivated'
     icon:
       - default: 'fr/signals/F'
@@ -7101,7 +7056,7 @@ features:
       - { tag: 'railway:signal:main', value: 'FR:C' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:F' }
-      - { tag: 'railway:signal:main:deactivated'}
+      - { tag: 'railway:signal:main:deactivated' }
 
   - description: Carré
     country: FR
@@ -7126,7 +7081,7 @@ features:
           - { exact: 'FR:PR', value: 'fr/plates/PR' }
         position: bottom
     tags:
-      - { tag: 'railway:signal:main', value: 'FR:C' }
+      - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:F' }
 
@@ -7147,7 +7102,7 @@ features:
       - { tag: 'railway:signal:main', value: 'FR:C' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:H' }
-      - { tag: 'railway:signal:main:deactivated'}
+      - { tag: 'railway:signal:main:deactivated' }
 
   - description: Carré
     country: FR
@@ -7174,9 +7129,54 @@ features:
           - { exact: 'FR:PR', value: 'fr/plates/PR' }
         position: bottom
     tags:
-      - { tag: 'railway:signal:main', value: 'FR:C' }
+      - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:H' }
+
+  # C type head, fallback if no shape is tagged
+  - description: Carré (Annulé)
+    country: FR
+    exampleIcon: 'fr/signals/examples/C-deactivated'
+    icon:
+      - default: 'fr/signals/C'
+      - default: 'fr/signals/aspects/C-cache'
+      - default: 'fr/plates/ID_Nf'
+        position: bottom
+      - match: 'railway:signal:main:type'
+        cases:
+          - { exact: 'FR:BM', value: 'fr/plates/BM' }
+          - { exact: 'FR:PR', value: 'fr/plates/PR' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:C' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:deactivated' }
+
+  # C type head, fallback if no shape is tagged
+  - description: Carré
+    country: FR
+    exampleIcon: 'fr/signals/examples/C-C'
+    icon:
+      - default: 'fr/signals/C'
+      - default: 'fr/signals/aspects/C-cache'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'off', value: 'fr/signals/aspects/C-cache' }
+          - { exact: 'FR:C', value: 'fr/signals/aspects/C-C' }
+          - { any: [ 'FR:A', 'FR:(A)' ], value: 'fr/signals/aspects/C-A' }
+          - { any: [ 'FR:VL', 'FR:(VL)' ], value: 'fr/signals/aspects/C-VL' }
+          - { any: [ 'FR:S', 'FR:(S)' ], value: 'fr/signals/aspects/C-S' }
+        default: 'fr/signals/aspects/C-C'
+      - default: 'fr/plates/ID_Nf'
+        position: bottom
+      - match: 'railway:signal:main:type'
+        cases:
+          - { exact: 'FR:BM', value: 'fr/plates/BM' }
+          - { exact: 'FR:PR', value: 'fr/plates/PR' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', any: [ 'FR:CARRE', 'FR:C' ] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
 
   # Carré violet
 
@@ -7223,7 +7223,7 @@ features:
           - { exact: 'FR:PR', value: 'fr/plates/PR' }
         position: bottom
     tags:
-      - { tag: 'railway:signal:main', value: 'FR:Cv' }
+      - { tag: 'railway:signal:main', any: ['FR:Cv', 'FR:CV'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:position', value: 'ground' }
 
@@ -7238,7 +7238,7 @@ features:
       - { tag: 'railway:signal:main', value: 'FR:Cv' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:K' }
-      - { tag: 'railway:signal:main:deactivated'}
+      - { tag: 'railway:signal:main:deactivated' }
 
   - description: Carré violet
     country: FR
@@ -7254,7 +7254,7 @@ features:
       - default: 'fr/plates/ID_Nf'
         position: bottom
     tags:
-      - { tag: 'railway:signal:main', value: 'FR:Cv' }
+      - { tag: 'railway:signal:main', any: ['FR:Cv', 'FR:CV'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:K' }
 
@@ -7274,7 +7274,7 @@ features:
       - { tag: 'railway:signal:main', value: 'FR:Cv' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:A' }
-      - { tag: 'railway:signal:main:deactivated'}
+      - { tag: 'railway:signal:main:deactivated' }
 
   - description: Carré violet
     country: FR
@@ -7295,53 +7295,9 @@ features:
           - { exact: 'FR:PR', value: 'fr/plates/PR' }
         position: bottom
     tags:
-      - { tag: 'railway:signal:main', value: 'FR:Cv' }
+      - { tag: 'railway:signal:main', any: ['FR:Cv', 'FR:CV'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:A' }
-
-  - description: Carré violet (Annulé)
-    country: FR
-    exampleIcon: 'fr/signals/examples/C-deactivated'
-    icon:
-      - default: 'fr/signals/C'
-      - default: 'fr/plates/ID_Nf'
-        position: bottom
-      - match: 'railway:signal:main:type'
-        cases:
-          - { exact: 'FR:BM', value: 'fr/plates/BM' }
-          - { exact: 'FR:PR', value: 'fr/plates/PR' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:main', value: 'FR:Cv' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:shape', value: 'FR:C' }
-      - { tag: 'railway:signal:main:deactivated'}
-
-  - description: Carré violet
-    country: FR
-    exampleIcon: 'fr/signals/examples/C-Cv'
-    icon:
-      - default: 'fr/signals/C'
-      - match: 'railway:signal:main:states'
-        cases:
-          - { exact: 'off', value: 'fr/signals/C' }
-          - { exact: 'FR:Cv', value: 'fr/signals/aspects/C-Cv' }
-          - { any: [ 'FR:M', 'FR:(M)' ], value: 'fr/signals/aspects/C-M' }
-          - { any: [ 'FR:A', 'FR:(A)' ], value: 'fr/signals/aspects/C-A' }
-          - { any: [ 'FR:VL', 'FR:(VL)' ], value: 'fr/signals/aspects/C-VL' }
-          - { any: [ 'FR:S', 'FR:(S)' ], value: 'fr/signals/aspects/C-S' }
-        default: 'fr/signals/aspects/C-Cv'
-      - default: 'fr/plates/ID_Nf'
-        position: bottom
-      - match: 'railway:signal:main:type'
-        cases:
-          - { exact: 'FR:BM', value: 'fr/plates/BM' }
-          - { exact: 'FR:PR', value: 'fr/plates/PR' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:main', value: 'FR:Cv' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:shape', value: 'FR:C' }
 
   - description: Carré violet (Annulé)
     country: FR
@@ -7359,7 +7315,7 @@ features:
       - { tag: 'railway:signal:main', value: 'FR:Cv' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:F' }
-      - { tag: 'railway:signal:main:deactivated'}
+      - { tag: 'railway:signal:main:deactivated' }
 
   - description: Carré violet
     country: FR
@@ -7384,7 +7340,7 @@ features:
           - { exact: 'FR:PR', value: 'fr/plates/PR' }
         position: bottom
     tags:
-      - { tag: 'railway:signal:main', value: 'FR:Cv' }
+      - { tag: 'railway:signal:main', any: ['FR:Cv', 'FR:CV'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:F' }
 
@@ -7404,7 +7360,7 @@ features:
       - { tag: 'railway:signal:main', value: 'FR:Cv' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:H' }
-      - { tag: 'railway:signal:main:deactivated'}
+      - { tag: 'railway:signal:main:deactivated' }
 
   - description: Carré violet
     country: FR
@@ -7431,9 +7387,53 @@ features:
           - { exact: 'FR:PR', value: 'fr/plates/PR' }
         position: bottom
     tags:
-      - { tag: 'railway:signal:main', value: 'FR:Cv' }
+      - { tag: 'railway:signal:main', any: ['FR:Cv', 'FR:CV'] }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:H' }
+
+  # C type head, fallback if no shape is tagged
+  - description: Carré violet (Annulé)
+    country: FR
+    exampleIcon: 'fr/signals/examples/C-deactivated'
+    icon:
+      - default: 'fr/signals/C'
+      - default: 'fr/plates/ID_Nf'
+        position: bottom
+      - match: 'railway:signal:main:type'
+        cases:
+          - { exact: 'FR:BM', value: 'fr/plates/BM' }
+          - { exact: 'FR:PR', value: 'fr/plates/PR' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:Cv' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:deactivated' }
+
+  # C type head, fallback if no shape is tagged
+  - description: Carré violet
+    country: FR
+    exampleIcon: 'fr/signals/examples/C-Cv'
+    icon:
+      - default: 'fr/signals/C'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'off', value: 'fr/signals/C' }
+          - { exact: 'FR:Cv', value: 'fr/signals/aspects/C-Cv' }
+          - { any: [ 'FR:M', 'FR:(M)' ], value: 'fr/signals/aspects/C-M' }
+          - { any: [ 'FR:A', 'FR:(A)' ], value: 'fr/signals/aspects/C-A' }
+          - { any: [ 'FR:VL', 'FR:(VL)' ], value: 'fr/signals/aspects/C-VL' }
+          - { any: [ 'FR:S', 'FR:(S)' ], value: 'fr/signals/aspects/C-S' }
+        default: 'fr/signals/aspects/C-Cv'
+      - default: 'fr/plates/ID_Nf'
+        position: bottom
+      - match: 'railway:signal:main:type'
+        cases:
+          - { exact: 'FR:BM', value: 'fr/plates/BM' }
+          - { exact: 'FR:PR', value: 'fr/plates/PR' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', any: ['FR:Cv', 'FR:CV'] }
+      - { tag: 'railway:signal:main:form', value: 'light' }
 
   # Sémaphore
 
@@ -7452,7 +7452,7 @@ features:
       - { tag: 'railway:signal:main', value: 'FR:S' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:K' }
-      - { tag: 'railway:signal:main:deactivated'}
+      - { tag: 'railway:signal:main:deactivated' }
 
   - description: Sémaphore
     country: FR
@@ -7491,7 +7491,7 @@ features:
       - { tag: 'railway:signal:main', value: 'FR:S' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:A' }
-      - { tag: 'railway:signal:main:deactivated'}
+      - { tag: 'railway:signal:main:deactivated' }
 
   - description: Sémaphore
     country: FR
@@ -7541,47 +7541,6 @@ features:
 
   - description: Sémaphore (Annulé)
     country: FR
-    exampleIcon: 'fr/signals/examples/C-deactivated'
-    icon:
-      - default: 'fr/signals/C'
-      - default: 'fr/signals/aspects/C-cache'
-      - match: 'railway:signal:main:type'
-        cases:
-          - { exact: 'FR:F', value: 'fr/plates/ID_F' }
-          - { exact: 'FR:BM', value: 'fr/plates/ID_BM' }
-          - { exact: 'FR:PR', value: 'fr/plates/ID_PR' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:main', value: 'FR:S' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:shape', value: 'FR:C' }
-      - { tag: 'railway:signal:main:deactivated'}
-
-  - description: Sémaphore
-    country: FR
-    exampleIcon: 'fr/signals/examples/C-S'
-    icon:
-      - default: 'fr/signals/C'
-      - default: 'fr/signals/aspects/C-cache'
-      - match: 'railway:signal:main:states'
-        cases:
-          - { exact: 'off', value: 'fr/signals/aspects/C-cache' }
-          - { any: [ 'FR:A', 'FR:(A)' ], value: 'fr/signals/aspects/C-A' }
-          - { any: [ 'FR:VL', 'FR:(VL)' ], value: 'fr/signals/aspects/C-VL' }
-        default: 'fr/signals/aspects/C-S'
-      - match: 'railway:signal:main:type'
-        cases:
-          - { exact: 'FR:F', value: 'fr/plates/ID_F' }
-          - { exact: 'FR:BM', value: 'fr/plates/ID_BM' }
-          - { exact: 'FR:PR', value: 'fr/plates/ID_PR' }
-        position: bottom
-    tags:
-      - { tag: 'railway:signal:main', value: 'FR:S' }
-      - { tag: 'railway:signal:main:form', value: 'light' }
-      - { tag: 'railway:signal:main:shape', value: 'FR:C' }
-
-  - description: Sémaphore (Annulé)
-    country: FR
     exampleIcon: 'fr/signals/examples/F-deactivated'
     icon:
       - default: 'fr/signals/F'
@@ -7596,7 +7555,7 @@ features:
       - { tag: 'railway:signal:main', value: 'FR:S' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:F' }
-      - { tag: 'railway:signal:main:deactivated'}
+      - { tag: 'railway:signal:main:deactivated' }
 
   - description: Sémaphore
     country: FR
@@ -7639,7 +7598,7 @@ features:
       - { tag: 'railway:signal:main', value: 'FR:S' }
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:H' }
-      - { tag: 'railway:signal:main:deactivated'}
+      - { tag: 'railway:signal:main:deactivated' }
 
   - description: Sémaphore
     country: FR
@@ -7668,6 +7627,47 @@ features:
       - { tag: 'railway:signal:main:form', value: 'light' }
       - { tag: 'railway:signal:main:shape', value: 'FR:H' }
 
+  # C type head, fallback if no shape is tagged
+  - description: Sémaphore (Annulé)
+    country: FR
+    exampleIcon: 'fr/signals/examples/C-deactivated'
+    icon:
+      - default: 'fr/signals/C'
+      - default: 'fr/signals/aspects/C-cache'
+      - match: 'railway:signal:main:type'
+        cases:
+          - { exact: 'FR:F', value: 'fr/plates/ID_F' }
+          - { exact: 'FR:BM', value: 'fr/plates/ID_BM' }
+          - { exact: 'FR:PR', value: 'fr/plates/ID_PR' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:S' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+      - { tag: 'railway:signal:main:deactivated' }
+
+  # C type head, fallback if no shape is tagged
+  - description: Sémaphore
+    country: FR
+    exampleIcon: 'fr/signals/examples/C-S'
+    icon:
+      - default: 'fr/signals/C'
+      - default: 'fr/signals/aspects/C-cache'
+      - match: 'railway:signal:main:states'
+        cases:
+          - { exact: 'off', value: 'fr/signals/aspects/C-cache' }
+          - { any: [ 'FR:A', 'FR:(A)' ], value: 'fr/signals/aspects/C-A' }
+          - { any: [ 'FR:VL', 'FR:(VL)' ], value: 'fr/signals/aspects/C-VL' }
+        default: 'fr/signals/aspects/C-S'
+      - match: 'railway:signal:main:type'
+        cases:
+          - { exact: 'FR:F', value: 'fr/plates/ID_F' }
+          - { exact: 'FR:BM', value: 'fr/plates/ID_BM' }
+          - { exact: 'FR:PR', value: 'fr/plates/ID_PR' }
+        position: bottom
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:S' }
+      - { tag: 'railway:signal:main:form', value: 'light' }
+
   # Guidon d'Arrêt
 
   - description: Guidon d'Arrêt
@@ -7692,7 +7692,7 @@ features:
     tags:
       - { tag: 'railway:signal:distant', value: 'FR:D' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:deactivated'}
+      - { tag: 'railway:signal:distant:deactivated' }
 
   - description: Disque
     country: FR
@@ -7725,7 +7725,7 @@ features:
     tags:
       - { tag: 'railway:signal:distant', value: 'FR:A' }
       - { tag: 'railway:signal:distant:form', value: 'light' }
-      - { tag: 'railway:signal:distant:deactivated'}
+      - { tag: 'railway:signal:distant:deactivated' }
 
   - description: Avertissement
     country: FR
