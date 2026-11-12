@@ -9082,9 +9082,9 @@ features:
       - { tag: 'railway:signal:bimode:function', value: 'exit' }
       - { tag: 'railway:signal:bimode:form', value: 'sign' }
 
-  - description: Bimode Sign
+  - description: Bimode Entry Sign
     country: FR
-    icon: [ default: 'fr/signs/bimode_exit' ]
+    icon: [ default: 'fr/signs/bimode_entry' ]
     tags:
       - { tag: 'railway:signal:electricity', any: [ 'FR:BIMODE', 'FR:BIMODE_A' ] }
       - { tag: 'railway:signal:electricity:form', value: 'sign' }
@@ -9717,7 +9717,7 @@ features:
       - { tag: 'railway:signal:stop:highspeed', value: 'FR:TGV' }
       - { tag: 'railway:signal:stop:highspeed:form', value: 'sign' }
 
-  - description: Stop for TGV 1-2
+  - description: Pancarte TGV 1-2 (US et UM2)
     country: FR
     icon: [ default: 'fr/signs/TGV_1-2' ]
     tags:
