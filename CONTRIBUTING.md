@@ -183,6 +183,54 @@ features:
       - ...
 ```
 
+The applicable features for a signal are matched from the top to the bottom of the list of features. If a feature has been determined for a certain type, no more features of that type will be matched. For example if the feature defined as
+```yaml
+features:
+  - description: distant with speed limit (light)
+    country: NL
+    icon:
+      - default: 'nl/distant_light_speed_limit'
+    tags:
+      - { tag: 'railway:signal:distant', value: 'NL' }
+      - { tag: 'railway:signal:distant:form', value: 'light' }
+      - { tag: 'railway:signal:speed_limit', value: 'NL' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'light' }
+```
+is matched, no further features of the types `distant` or `speed_limit` will be matched for that signal.
+
+Additionally, some signal types have *subtypes* defined. A signal may match multiple subtypes for per signal type, each determined as a feature for the signal. For example the railway signal tagged as
+```
+railway:signal:train_protection = ETCS:marker
+railway:signal:train_protection:main = ETCS:stop_marker
+railway:signal:train_protection:main:form = sign
+railway:signal:train_protection:system_change = ETCS:level_transition
+railway:signal:train_protection:system_change:form = sign
+```
+will match both features
+```yaml
+features:
+  - description: ETCS level transition
+    icon:
+      - default: 'etcs/level_transition'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
+      - { tag: 'railway:signal:train_protection:system_change', value: 'ETCS:level_transition' }
+      - { tag: 'railway:signal:train_protection:system_change:form', value: 'sign' }
+
+  - description: ETCS stop marker
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'left', value: 'etcs/stop_marker-right' }
+          - { any: ['overhead', 'bridge'], value: 'etcs/stop_marker-down' }
+        default: 'etcs/stop_marker-left'
+    tags:
+      - { tag: 'railway:signal:train_protection', value: 'ETCS:marker' }
+      - { tag: 'railway:signal:train_protection:main', value: 'ETCS:stop_marker' }
+      - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
+```
+because the signal type `train_protection` has subtypes `main` and `system_change` defined.
+
 If the railway signal uses tags that are not in the list at the top of the file, ensure the tag is added there. For example:
 ```yaml
 tags:
