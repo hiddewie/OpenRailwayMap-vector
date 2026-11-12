@@ -8284,20 +8284,15 @@ features:
       - { tag: 'railway:signal:shunting_route:depot', value: 'FR:D' }
       - { tag: 'railway:signal:shunting_route:depot:form', value: 'board' }
 
-  - description: Caisson D / G
+  - description: Caisson D
     country: FR
     exampleIcon: 'fr/boxes/examples/D'
     icon:
-      - match: 'railway:signal:shunting_route:depot'
-        cases:
-          - { exact: 'FR:D', value: 'fr/boxes/single/D' } # with background from fr/boxes/single
-        position: right
-      - match: 'railway:signal:shunting_route:stabling'
-        cases:
-          - { exact: 'FR:G', value: 'fr/boxes/single/G' } # with background from fr/boxes/single
-        position: right
+      - default: 'fr/boxes/single'
+      - default: 'fr/boxes/single/D'
     tags:
       - { tag: 'railway:signal:shunting_route', value: 'FR:destination' }
+      - { tag: 'railway:signal:shunting_route:depot', value: 'FR:D' }
       - { tag: 'railway:signal:shunting_route:depot:form', value: 'light' }
 
   - description: Pancarte G
