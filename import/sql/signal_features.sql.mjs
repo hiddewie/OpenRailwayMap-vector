@@ -94,9 +94,9 @@ const signalsWithSignalType = await promiseResultsOrErrors(
         ...icon,
         cases: icon.cases
           ? await promiseResultsOrErrors(icon.cases.map(async iconCase => ({
-            ...iconCase,
-            dimensions: await parseSvgDimensions(iconCase.example ?? iconCase.value)
-          })))
+              ...iconCase,
+              dimensions: await parseSvgDimensions(iconCase.example ?? iconCase.value)
+            })))
           : undefined,
         dimensions: icon.default ? await parseSvgDimensions(icon.default) : undefined,
       }))),
@@ -312,19 +312,19 @@ CREATE OR REPLACE VIEW signal_features_view AS
   -- Output a feature row for every feature
   signals_with_features_1 AS (
     ${featureColumns.map(column => `
-  SELECT
-    signal_id,
-    feature_${column.name}[1] as feature,
-    feature_${column.name}[2] as feature_variable,
-    GREATEST(feature_${column.name}[3]::REAL + feature_${column.name}[4]::REAL, feature_${column.name}[5]::REAL) as icon_height,
-    feature_${column.name}[6] as type,
-    feature_${column.name}[7]::boolean as deactivated,
-    feature_${column.name}[8]::INT as rank,
-    feature_${column.name}[9] as caption,
-    '${column.category}' as category
-  FROM signals_with_features_0
-  WHERE feature_${column.name} IS NOT NULL
-`).join(`
+    SELECT
+      signal_id,
+      feature_${column.name}[1] as feature,
+      feature_${column.name}[2] as feature_variable,
+      GREATEST(feature_${column.name}[3]::REAL + feature_${column.name}[4]::REAL, feature_${column.name}[5]::REAL) as icon_height,
+      feature_${column.name}[6] as type,
+      feature_${column.name}[7]::boolean as deactivated,
+      feature_${column.name}[8]::INT as rank,
+      feature_${column.name}[9] as caption,
+      '${column.category}' as category
+    FROM signals_with_features_0
+    WHERE feature_${column.name} IS NOT NULL
+  `).join(`
     UNION ALL
   `)}
     UNION ALL
