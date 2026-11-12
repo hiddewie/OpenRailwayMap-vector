@@ -7886,7 +7886,6 @@ features:
   - description: Pancarte Km
     country: FR
     icon: [ default: 'fr/signs/Km' ]
-    caption: { tag: 'railway:position:exact', template: 'Km {}', decimals: 1, rounding: truncate, decimalSeparator: ',' }
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'FR:speed_indicator' }
       - { tag: 'railway:signal:speed_limit:transition', value: 'FR:Km' }
