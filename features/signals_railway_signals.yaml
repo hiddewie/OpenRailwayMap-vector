@@ -7951,7 +7951,7 @@ features:
     country: FR
     icon: [ default: 'fr/signs/Km' ]
     tags:
-      - { tag: 'railway:signal:speed_limit', value: 'FR:speed_indicator' }
+      - { tag: 'railway:signal:speed_limit', any: ['FR:speed_indicator', 'FR:marker'] }
       - { tag: 'railway:signal:speed_limit:transition', value: 'FR:Km' }
       - { tag: 'railway:signal:speed_limit:transition:form', value: 'sign' }
 
