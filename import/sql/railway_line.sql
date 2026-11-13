@@ -68,6 +68,11 @@ CREATE OR REPLACE VIEW railway_line_view AS
     coalesce(ro.bright, get_byte(sha256(primary_operator::bytea), 0) between 44 AND 189) as operator_bright,
     primary_operator,
     owner,
+    COALESCE(
+      ro2.color,
+      'hsl(' || get_byte(sha256(owner::bytea), 0) || ', 100%, 30%)'
+    ) as owner_color,
+    coalesce(ro.bright, get_byte(sha256(owner::bytea), 0) between 44 AND 189) as owner_bright,
     traffic_mode,
     radio,
     rubber_tires,
@@ -151,6 +156,8 @@ CREATE OR REPLACE VIEW railway_line_view AS
   ) AS r
   LEFT JOIN railway_operator ro
     ON ro.name = primary_operator
+  LEFT JOIN railway_operator ro2
+    ON ro2.name = owner
   LEFT JOIN line_route_count rl
     ON rl.id = r.id;
 

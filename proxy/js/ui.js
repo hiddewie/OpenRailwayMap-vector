@@ -651,6 +651,10 @@ const styleElements = [
         value: 'operator',
       },
       {
+        name: 'Owner',
+        value: 'owner',
+      },
+      {
         name: 'Routes',
         value: 'routes',
       },
@@ -681,6 +685,10 @@ const styleElements = [
       {
         name: 'Operator',
         value: 'operator',
+      },
+      {
+        name: 'Owner',
+        value: 'owner',
       },
       {
         name: 'None',
@@ -823,6 +831,10 @@ const styleElements = [
         value: 'operator',
       },
       {
+        name: 'Owner',
+        value: 'owner',
+      },
+      {
         name: 'None',
         value: 'none',
       },
@@ -857,6 +869,10 @@ const styleElements = [
       {
         name: 'Operator',
         value: 'operator',
+      },
+      {
+        name: 'Owner',
+        value: 'owner',
       },
       {
         name: 'None',
