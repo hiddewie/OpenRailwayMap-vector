@@ -6956,6 +6956,18 @@ features:
       - { tag: 'railway:signal:stop', value: 'FR:chevron' }
       - { tag: 'railway:signal:stop:form', value: 'sign' }
 
+  - description: Chevron pointe en haut
+    country: FR
+    exampleIcon: 'fr/signs/chevron_up'
+    icon:
+      - match: 'railway:signal:position'
+        cases:
+          - { exact: 'ground', value: 'fr/signs/small/chevron_up' }
+        default: 'fr/signs/chevron_up'
+    tags:
+      - { tag: 'railway:signal:minor', value: 'FR:chevron' }
+      - { tag: 'railway:signal:minor:form', value: 'sign' }
+
   - description: TIP
     country: FR
     exampleIcon: 'fr/boxes/examples/TIP'
