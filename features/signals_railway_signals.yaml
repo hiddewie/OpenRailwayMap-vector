@@ -8024,6 +8024,21 @@ features:
 
   - description: TIV-D Mobile
     country: FR
+    exampleIcon: 'fr/boxes/examples/TIV-D_closed'
+    icon:
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^([6-9]0|1[0-6]0)$', value: 'fr/boxes/TIV-D_closed' }
+        default: 'fr/boxes/TIV-D_open'
+      - match: 'railway:signal:speed_limit_distant:speed'
+        cases:
+          - { regex: '^([6-9]0|1[0-6]0)$', value: 'fr/boxes/TIV/TIV-D_{}', example: 'fr/boxes/TIV/TIV-D_{80}' }
+    tags:
+      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
+      - { tag: 'railway:signal:speed_limit_distant:form', value: 'light' }
+
+  - description: TIV-D Mobile
+    country: FR
     icon:
       - default: 'fr/boards/TIV-D_diamond_switchable'
       - match: 'railway:signal:speed_limit_distant:speed'
