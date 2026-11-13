@@ -8941,7 +8941,7 @@ features:
           - { exact: 'FR:F', value: 'fr/plates/ID_F' }
         position: bottom
     tags:
-      - { tag: 'railway:signal:train_protection', value: 'FR:TVM' }
+      - { tag: 'railway:signal:train_protection', any: ['FR:TVM', 'FR:marker'] }
       - { tag: 'railway:signal:train_protection:main', value: 'stop_marker' }
       - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
 
