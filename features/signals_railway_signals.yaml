@@ -7906,7 +7906,7 @@ features:
       - { tag: 'railway:signal:speed_limit:marker:function', value: 'exit' }
       - { tag: 'railway:signal:speed_limit:marker:form', value: 'sign' }
 
-  - description: Tableau R
+  - description: Pancarte R
     country: FR
     icon: [ default: 'fr/signs/R' ]
     tags:
@@ -8291,14 +8291,15 @@ features:
       - { tag: 'railway:signal:switch', value: 'FR:TIDD' }
       - { tag: 'railway:signal:switch:form', value: 'light' }
 
-  - description: Distant route indicator
+  - description: TIDD
     country: FR
     icon:
       - default: 'fr/boxes/double'
       - match: 'railway:signal:route_distant:states'
         cases:
-          - { exact: 'left', value: 'fr/boxes/double/TIDD_left' }
           - { exact: 'right', value: 'fr/boxes/double/TIDD_right' }
+          - { exact: 'left', value: 'fr/boxes/double/TIDD_left' }
+        default: 'fr/boxes/double'
     tags:
       - { tag: 'railway:signal:route_distant', value: 'FR:TIDD' }
       - { tag: 'railway:signal:route_distant:form', value: 'light' }
@@ -8419,9 +8420,9 @@ features:
       - { tag: 'railway:signal:shunting_route:depot', value: 'FR:D' }
       - { tag: 'railway:signal:shunting_route:depot:form', value: 'light' }
 
-  - description: Pancarte / Caisson D
+  - description: Pancarte D
     country: FR
-    icon: [ default: 'fr/boards/D' ]
+    icon: [ default: 'fr/signs/D' ]
     tags:
       - { tag: 'railway:signal:shunting', value: 'FR:D' }
       - { tag: 'railway:signal:shunting:form', any: [ 'sign', 'light' ] }
@@ -8453,9 +8454,9 @@ features:
       - { tag: 'railway:signal:shunting_route:stabling', value: 'FR:G' }
       - { tag: 'railway:signal:shunting_route:stabling:form', value: 'light' }
 
-  - description: Pancarte / Caisson G
+  - description: Pancarte G
     country: FR
-    icon: [ default: 'fr/boards/G' ]
+    icon: [ default: 'fr/signs/G' ]
     tags:
       - { tag: 'railway:signal:shunting', value: 'FR:G' }
       - { tag: 'railway:signal:shunting:form', any: [ 'sign', 'light' ] }
@@ -8479,7 +8480,7 @@ features:
       - { tag: 'railway:signal:wrong_road:entry', value: 'FR:TECS' }
       - { tag: 'railway:signal:wrong_road:entry:form', value: 'light' }
 
-  - description: Tableau / Caisson TECS
+  - description: Tableau TECS
     country: FR
     icon: [ default: 'fr/boards/TECS' ]
     tags:
@@ -8505,7 +8506,7 @@ features:
       - { tag: 'railway:signal:wrong_road:exit', value: 'FR:TSCS' }
       - { tag: 'railway:signal:wrong_road:exit:form', value: 'light' }
 
-  - description: Tableau / Caisson TSCS
+  - description: Tableau TSCS
     country: FR
     icon: [ default: 'fr/boards/TSCS' ]
     tags:
@@ -8580,7 +8581,7 @@ features:
       - { tag: 'railway:signal:electricity', value: 'FR:GIVRE' }
       - { tag: 'railway:signal:electricity:form', value: 'light' }
 
-  - description: Tableau / Caisson Givre
+  - description: Tableau Givre
     country: FR
     icon: [ default: 'fr/boards/GIVRE' ]
     tags:
@@ -8846,7 +8847,7 @@ features:
       - { tag: 'railway:signal:train_protection:main:form', value: 'sign' }
       - { tag: 'railway:signal:train_protection:main:etcs' }
 
-  - description: TVM and ETCS block marker
+  - description: Repères d'arrêt TVM et ETCS
     country: FR
     icon:
       - match: 'railway:signal:position'
@@ -8864,24 +8865,24 @@ features:
       - { tag: 'railway:signal:train_protection', any: [ 'FR:REP_ETCS;FR:REP_TVM', 'FR:repère_arrêt_ETCS;FR:repère_arrêt_TVM' ] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
-  - description: TVM block marker
+  - description: Repère d'arrêt TVM
     country: FR
     icon:
       - match: 'railway:signal:position'
         cases:
           - { exact: 'right', value: 'fr/signs/TVM_stop_marker_right' }
-        default: 'fr/signs/ETCS_stop_marker_left'
+        default: 'fr/signs/TVM_stop_marker_left'
     tags:
       - { tag: 'railway:signal:train_protection', any: [ 'FR:REP_TVM', 'FR:repère_arrêt_TVM' ] }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
 
-  - description: ETCS stop marker
+  - description: Repères d'arrêt ETCS
     country: FR
     icon:
       - match: 'railway:signal:position'
         cases:
           - { exact: 'right', value: 'fr/signs/ETCS_stop_marker_right' }
-        default: 'fr/signs/TVM_stop_marker_left'
+        default: 'fr/signs/ETCS_stop_marker_left'
     tags:
       - { tag: 'railway:signal:train_protection', value: 'FR:REP_ETCS' }
       - { tag: 'railway:signal:train_protection:form', value: 'sign' }
