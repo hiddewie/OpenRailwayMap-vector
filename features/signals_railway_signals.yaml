@@ -6923,6 +6923,13 @@ features:
       - { tag: 'railway:signal:speed_limit:pointing', value: 'upwards' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
+  - description: Chevron pointe en haut
+    country: FR
+    icon: [ default: 'fr/signs/chevron_up' ]
+    tags:
+      - { tag: 'railway:signal:shunting', value: 'FR:CHEVRON_HAUT' }
+      - { tag: 'railway:signal:shunting:form', value: 'sign' }
+
   - description: Chevron pointe en bas
     country: FR
     exampleIcon: 'fr/signs/chevron_down'
@@ -6942,6 +6949,14 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'FR:Chevron' }
       - { tag: 'railway:signal:speed_limit:pointing', value: 'downwards' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Chevron pointe en bas
+    country: FR
+    icon: [ default: 'fr/signs/chevron_down' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', any: ['FR:CHEVRON_BAS', 'FR:CHEVRON'] }
+      - { tag: 'railway:signal:speed_limit:type', value: 'downwards' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
   - description: Chevron pointe en haut
