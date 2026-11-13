@@ -11,7 +11,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS line_route_count AS
     ON rl.route_id = r.osm_id
   GROUP BY l.id;
 
-CREATE UNIQUE INDEX line_route_count_id
+CREATE UNIQUE INDEX IF NOT EXISTS line_route_count_id
   ON line_route_count (id);
 
 CREATE OR REPLACE VIEW railway_line_view AS
@@ -221,7 +221,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS railway_line_low_grouped AS
     *
   FROM railway_line_low_grouped_view;
 
-CREATE INDEX railway_line_low_grouped_way
+CREATE INDEX IF NOT EXISTS railway_line_low_grouped_way
   ON railway_line_low_grouped
     USING GIST(way);
 
