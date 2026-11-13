@@ -314,6 +314,12 @@ tags:
   - { tag: 'railway:signal:speed_limit:freight:function', title: 'Speed limit freight function' }
   - { tag: 'railway:signal:speed_limit:freight:ref', title: 'Speed limit freight reference' }
   - { tag: 'railway:signal:speed_limit:freight:speed', title: 'Speed limit freight speed' }
+  - { tag: 'railway:signal:speed_limit:main', title: 'Speed limit main' }
+  - { tag: 'railway:signal:speed_limit:main:caption', title: 'Speed limit main caption' }
+  - { tag: 'railway:signal:speed_limit:main:deactivated', title: 'Speed limit main deactivated', type: boolean }
+  - { tag: 'railway:signal:speed_limit:main:form', title: 'Speed limit main form' }
+  - { tag: 'railway:signal:speed_limit:main:function', title: 'Speed limit main function' }
+  - { tag: 'railway:signal:speed_limit:main:ref', title: 'Speed limit main reference' }
   - { tag: 'railway:signal:speed_limit:marker', title: 'Speed limit marker' }
   - { tag: 'railway:signal:speed_limit:marker:caption', title: 'Speed limit marker caption' }
   - { tag: 'railway:signal:speed_limit:marker:deactivated', title: 'Speed limit marker deactivated', type: boolean }
@@ -548,7 +554,7 @@ types:
   - { type: distant, category: distant }
   - { type: train_protection, category: train_protection, subtypes: [main, system_change] }
   - { type: main_repeated, category: distant }
-  - { type: speed_limit, category: speed, subtypes: [marker, transition, switch, switchable, freight] }
+  - { type: speed_limit, category: speed, subtypes: [main, marker, transition, switch, switchable, freight] }
   - { type: speed_limit_distant, category: speed, subtypes: [fixed, switchable, fast, railcar, freight] }
   - { type: minor, category: other }
   - { type: minor_distant, category: other }
@@ -7897,6 +7903,14 @@ features:
       - { tag: 'railway:signal:speed_limit', value: 'FR:Z' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
 
+  - description: Pancarte Z
+    country: FR
+    icon: [ default: 'fr/signs/Z' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FR:marker' }
+      - { tag: 'railway:signal:speed_limit:main', value: 'FR:Z' }
+      - { tag: 'railway:signal:speed_limit:main:form', value: 'sign' }
+
   - description: Pancarte R
     country: FR
     icon: [ default: 'fr/signs/R' ]
@@ -7912,6 +7926,14 @@ features:
     tags:
       - { tag: 'railway:signal:speed_limit', value: 'FR:R' }
       - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
+  - description: Pancarte R
+    country: FR
+    icon: [ default: 'fr/signs/R' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FR:marker' }
+      - { tag: 'railway:signal:speed_limit:main', value: 'FR:R' }
+      - { tag: 'railway:signal:speed_limit:main:form', value: 'sign' }
 
   - description: Pancarte Km
     country: FR
