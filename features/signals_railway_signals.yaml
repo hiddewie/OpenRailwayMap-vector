@@ -7977,6 +7977,13 @@ features:
       - { tag: 'railway:signal:speed_limit:transition', value: 'FR:Km' }
       - { tag: 'railway:signal:speed_limit:transition:form', value: 'sign' }
 
+  - description: Pancarte Km
+    country: FR
+    icon: [ default: 'fr/signs/Km' ]
+    tags:
+      - { tag: 'railway:signal:speed_limit', value: 'FR:KM' }
+      - { tag: 'railway:signal:speed_limit:form', value: 'sign' }
+
   # FR: TIV
   # Every TIV is a base (the empty board, box or sign) plus a number overlay.
   # Switchable and fixed TIV-D share their overlays, on distinct bases.
