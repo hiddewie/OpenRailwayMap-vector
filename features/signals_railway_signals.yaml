@@ -7914,6 +7914,13 @@ features:
       - { tag: 'railway:signal:clearance', value: 'FR:reduced_clearance' }
       - { tag: 'railway:signal:clearance:form', value: 'sign' }
 
+  - description: Pancarte Gabarit Réduit
+    country: FR
+    icon: [ default: 'fr/signs/reduced_clearance' ]
+    tags:
+      - { tag: 'railway:signal:main', value: 'FR:GABARIT' }
+      - { tag: 'railway:signal:main:form', value: 'sign' }
+
   - description: Pancarte Z
     country: FR
     icon: [ default: 'fr/signs/Z' ]
