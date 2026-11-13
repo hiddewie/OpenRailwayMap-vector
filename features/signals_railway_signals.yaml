@@ -8231,7 +8231,7 @@ features:
         cases:
           - { regex: '^([1-7]0|[89][05]|1[0-3][05]|140)$', value: 'fr/signs/TIV/TIV-D_square_{}', example: 'fr/signs/TIV/TIV-D_square_{140}' }
     tags:
-      - { tag: 'railway:signal:speed_limit_distant', value: 'FR:TIV-D' }
+      - { tag: 'railway:signal:speed_limit_distant', any: ['FR:TIV-D', 'FR:TIV-D_FIXE'] }
       - { tag: 'railway:signal:speed_limit_distant:form', value: 'sign' }
 
   - description: TIV-D Fixe de type C
