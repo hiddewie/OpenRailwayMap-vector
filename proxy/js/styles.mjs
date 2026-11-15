@@ -4218,19 +4218,15 @@ const layers = [
                 ['case',
                   // First visible icon
                   ...Array.from(Array(featureIndex + 1), (_, i) => i).flatMap(i => [
-                    ['all',
-                      ['!=', ['get', `feature${i}`], null],
-                      ['in', ['get', `category${i}`], ['global-state', 'signals']],
-                    ], ['-', ['/', ['get', `icon_height${i}`], 2]],
+                    ['in', ['get', `category${i}`], ['global-state', 'signals']],
+                    ['-', ['/', ['get', `icon_height${i}`], 2]],
                   ]),
                   0,
                 ],
                 ...Array.from(Array(featureIndex), (_, i) =>
                   ['case',
-                    ['all',
-                      ['!=', ['get', `feature${i}`], null],
-                      ['in', ['get', `category${i}`], ['global-state', 'signals']],
-                    ], ['get', `icon_height${i}`],
+                    ['in', ['get', `category${i}`], ['global-state', 'signals']],
+                    ['get', `icon_height${i}`],
                     0,
                   ]),
                 ['/', ['get', `icon_height${featureIndex}`], 2],
@@ -4256,10 +4252,8 @@ const layers = [
                   ['case',
                     // First visible icon, icon is shown above anchor in pitched view
                     ...Array.from(Array(featureIndex + 1), (_, i) => i).flatMap(i => [
-                      ['all',
-                        ['!=', ['get', `feature${i}`], null],
-                        ['in', ['get', `category${i}`], ['global-state', 'signals']],
-                      ], ['/', ['get', `icon_height${i}`], 2],
+                      ['in', ['get', `category${i}`], ['global-state', 'signals']],
+                      ['/', ['get', `icon_height${i}`], 2],
                     ]),
                     0,
                   ],
@@ -4302,19 +4296,14 @@ const layers = [
               ['case',
                 // First visible icon
                 ...Array.from(Array(featureIndex + 1), (_, i) => i).flatMap(i => [
-                  ['all',
-                    ['!=', ['get', `feature${i}`], null],
-                    ['in', ['get', `category${i}`], ['global-state', 'signals']],
-                  ], ['-', ['/', ['get', `icon_height${i}`], 2]],
+                  ['in', ['get', `category${i}`], ['global-state', 'signals']],
+                  ['-', ['/', ['get', `icon_height${i}`], 2]],
                 ]),
                 0,
               ],
               ...Array.from(Array(featureIndex), (_, i) =>
                 ['case',
-                  ['all',
-                    ['!=', ['get', `feature${i}`], null],
-                    ['in', ['get', `category${i}`], ['global-state', 'signals']],
-                  ], ['get', `icon_height${i}`],
+                  ['in', ['get', `category${i}`], ['global-state', 'signals']], ['get', `icon_height${i}`],
                   0,
                 ]),
               ['/', ['get', `icon_height${featureIndex}`], 2],
@@ -4340,10 +4329,8 @@ const layers = [
                 ['case',
                   // First visible icon, icon is shown above anchor in pitched view
                   ...Array.from(Array(featureIndex + 1), (_, i) => i).flatMap(i => [
-                    ['all',
-                      ['!=', ['get', `feature${i}`], null],
-                      ['in', ['get', `category${i}`], ['global-state', 'signals']],
-                    ], ['/', ['get', `icon_height${i}`], 2],
+                    ['in', ['get', `category${i}`], ['global-state', 'signals']],
+                    ['/', ['get', `icon_height${i}`], 2],
                   ]),
                   0,
                 ],
@@ -4411,10 +4398,8 @@ const layers = [
             ['case',
               // First visible icon
               ...Array.from(Array(signalFeatureIndices[signalFeatureIndices.length - 1] + 1), (_, i) => i).flatMap(i => [
-                ['all',
-                  ['!=', ['get', `feature${i}`], null],
-                  ['in', ['get', `category${i}`], ['global-state', 'signals']],
-                ], ['/', ['get', `icon_height${i}`], 2],
+                ['in', ['get', `category${i}`], ['global-state', 'signals']],
+                ['/', ['get', `icon_height${i}`], 2],
               ]),
               0,
             ],
