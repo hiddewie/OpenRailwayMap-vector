@@ -2964,6 +2964,7 @@ const layers = [
           'axle_load', axleLoadFillColor,
           'metre_load', metreLoadFillColor,
           'operator', ['coalesce', ['get', 'operator_color'], 'gray'],
+          'owner', ['coalesce', ['get', 'owner_color'], 'gray'],
           'routes', ['match', ['coalesce', ['get', 'route_count'], 0],
             0, 'gray',
             turboColorMap(['get', 'route_count'], 0, 25, 0.5),
@@ -2984,7 +2985,7 @@ const layers = [
           'speed', speedHoverColor,
           colors.hover.main,
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'gauge', 'loading_gauge', 'track_class', 'axle_load', 'metre_load', 'operator', 'routes', 'passenger_lines', 'radio', 'plain']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'gauge', 'loading_gauge', 'track_class', 'axle_load', 'metre_load', 'operator', 'owner', 'routes', 'passenger_lines', 'radio', 'plain']]],
       },
       {
         id: 'train_protection_line_med_train_protection_construction',
@@ -3187,6 +3188,7 @@ const layers = [
           'axle_load', axleLoadFillColor,
           'metre_load', metreLoadFillColor,
           'operator', ['coalesce', ['get', 'operator_color'], 'gray'],
+          'owner', ['coalesce', ['get', 'owner_color'], 'gray'],
           'routes', ['match', ['coalesce', ['get', 'route_count'], 0],
             0, 'gray',
             turboColorMap(['get', 'route_count'], 0, 25, 0.5),
@@ -3211,7 +3213,7 @@ const layers = [
           'speed', speedHoverColor,
           colors.hover.main,
         ],
-        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'operator', 'loading_gauge', 'track_class', 'axle_load', 'metre_load', 'routes', 'passenger_lines', 'radio', 'plain']]],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['usage', 'speed', 'operator', 'owner', 'loading_gauge', 'track_class', 'axle_load', 'metre_load', 'routes', 'passenger_lines', 'radio', 'plain']]],
       },
       {
         id: 'railway_line_construction_proposed',
