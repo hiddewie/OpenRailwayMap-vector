@@ -540,12 +540,6 @@ const trackLabel = {
     ['all',
       ['!=', ['get', 'voltage'], null],
       ['!=', ['get', 'maximum_current'], null],
-      ['!=', ['get', 'frequency'], null],
-      ['!=', ['get', 'frequency'], 0]
-    ], ['concat', ['number-format', ['*', ['get', 'voltage'], ['get', 'maximum_current'], 0.000001/Math.sqrt(2)], {'max-fraction-digits': 1}], ' MW'],
-    ['all',
-      ['!=', ['get', 'voltage'], null],
-      ['!=', ['get', 'maximum_current'], null],
     ], ['concat', ['number-format', ['*', ['get', 'voltage'], ['get', 'maximum_current'], 0.000001], {'max-fraction-digits': 1}], ' MW'],
     '',
   ],
