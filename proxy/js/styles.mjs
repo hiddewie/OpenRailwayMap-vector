@@ -337,7 +337,7 @@ const electrificationPowerColor = (voltageProperty, maximumCurrentProperty) => [
   ['all',
     ['!=', ['get', voltageProperty], null],
     ['!=', ['get', maximumCurrentProperty], null],
-  ], turboColorMap(['*', ['get', voltageProperty], ['get', maximumCurrentProperty]], 1_500_000, 32_000_000, 0.3),
+  ], turboColorMap(['*', ['get', voltageProperty], ['get', maximumCurrentProperty]], 1_500_000, 45_000_000, 0.3),
   ['any',
     ['==', ['get', 'electrification_state'], 'deelectrified'],
     ['==', ['get', 'electrification_state'], 'abandoned'],
