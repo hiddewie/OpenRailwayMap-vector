@@ -1720,7 +1720,8 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       state,
-      operator_color
+      operator_color,
+      owner_color
     FROM railway_line_low_grouped l
     WHERE way && ST_TileEnvelope(z, x, y)
     ORDER by
@@ -1739,7 +1740,8 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "operator_color": "string"
+          "operator_color": "string",
+          "owner_color": "string"
         }
       }
     ]

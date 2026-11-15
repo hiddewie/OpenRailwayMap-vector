@@ -191,6 +191,7 @@ CREATE OR REPLACE VIEW railway_line_low_grouped_view AS
     loading_gauge,
     passenger_lines,
     operator_color,
+    owner_color,
     route_count,
     max(rank) as rank
   FROM railway_line_view l
@@ -221,6 +222,7 @@ CREATE OR REPLACE VIEW railway_line_low_grouped_view AS
     loading_gauge,
     passenger_lines,
     operator_color,
+    owner_color,
     route_count;
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS railway_line_low_grouped AS

@@ -581,7 +581,8 @@ const trackLabel = {
     ['!=', ['get', 'metre_load'], null], ['number-format', ['get', 'metre_load'], {'max-fraction-digits': 1}],
     ''
   ],
-  operator:  ['coalesce', ['get', 'primary_operator'], ''],
+  operator: ['coalesce', ['get', 'primary_operator'], ''],
+  owner: ['coalesce', ['get', 'owner'], ''],
   radio: ['match', ['get', 'radio'],
     ...radio.radio.flatMap(({value, name}) =>
       [value, name]
@@ -2898,8 +2899,12 @@ const layers = [
           0, 0.5,
           7, 2,
         ],
-        color: ['coalesce', ['get', 'operator_color'], 'gray'],
-        visibility: ['==', ['global-state', 'tracks'], 'operator'],
+        color: ['match', ['global-state', 'tracks'],
+          'operator', ['coalesce', ['get', 'operator_color'], 'gray'],
+          'owner', ['coalesce', ['get', 'owner_color'], 'gray'],
+          'gray',
+        ],
+        visibility: ['in', ['global-state', 'tracks'], ['literal', ['operator', 'owner']]],
       },
       {
         id: 'route_line_low',
