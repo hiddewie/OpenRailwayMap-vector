@@ -304,7 +304,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     discr_iso,
     count,
     gs.operator as operator,
-    owner,
+    gs.owner as owner,
     network,
     COALESCE(
       ro.color,
@@ -313,9 +313,9 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     coalesce(ro.bright, get_byte(sha256(gs.operator[1]::bytea), 0) between 44 AND 189) as operator_bright,
     COALESCE(
       ro2.color,
-      'hsl(' || get_byte(sha256(owner::bytea), 0) || ', 100%, 30%)'
+      'hsl(' || get_byte(sha256(gs.owner[1]::bytea), 0) || ', 100%, 30%)'
     ) as owner_color,
-    coalesce(ro.bright, get_byte(sha256(owner::bytea), 0) between 44 AND 189) as owner_bright,
+    coalesce(ro.bright, get_byte(sha256(gs.owner[1]::bytea), 0) between 44 AND 189) as owner_bright,
     position,
     wikidata,
     wikimedia_commons,
@@ -332,7 +332,7 @@ CREATE OR REPLACE VIEW railway_text_stations AS
   LEFT JOIN railway_operator ro
     ON ro.name = operator[1]
   LEFT JOIN railway_operator ro2
-    ON ro.name = owner
+    ON ro2.name = owner[1]
   ORDER BY
     rank DESC NULLS LAST,
     importance DESC NULLS LAST;
@@ -1417,7 +1417,9 @@ CREATE OR REPLACE VIEW signal_boxes_view AS
     description
   FROM boxes b
   LEFT JOIN railway_operator ro
-    ON ro.name = operator;
+    ON ro.name = operator
+  LEFT JOIN railway_operator ro2
+    ON ro2.name = owner;
 
 CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
   RETURNS bytea
