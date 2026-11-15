@@ -1,10 +1,16 @@
-FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f
+FROM node:24-alpine@sha256:a34ab6d7f6f4813f4d0c5469d74685604b962fbdbf5793a7bc7b4998ecb867c8
+
+WORKDIR /build/test
+
+COPY test/package.json test/package-lock.json .
+RUN npm install
+
+COPY test/test.js .
 
 WORKDIR /build
 
-RUN npm install -g @jirutka/ajv-cli@6.0.0
+COPY schema schema
+COPY *.yaml .
 
-COPY . .
-
-ENTRYPOINT ["sh"]
-CMD ["test/test.sh"]
+ENTRYPOINT ["node"]
+CMD ["test/test.js"]

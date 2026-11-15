@@ -14,19 +14,19 @@
   <script type="importmap">
     {
       "imports": {
-        "maplibre-gl": "./js/maplibre-gl-6.9.1/maplibre-gl.mjs",
-        "./dist/maplibre-gl-shared.mjs": "./js/maplibre-gl-6.9.1/maplibre-gl-shared.mjs",
-        "./dist/maplibre-gl-worker.mjs": "./js/maplibre-gl-6.9.1/maplibre-gl-worker.mjs"
+        "maplibre-gl": "./js/maplibre-gl-6.14.0/maplibre-gl.mjs",
+        "./dist/maplibre-gl-shared.mjs": "./js/maplibre-gl-6.14.0/maplibre-gl-shared.mjs",
+        "./dist/maplibre-gl-worker.mjs": "./js/maplibre-gl-6.14.0/maplibre-gl-worker.mjs"
       }
     }
   </script>
 
   <link rel="stylesheet" href="css/bootstrap-5.3.3/bootstrap.min.css">
-  <link rel="stylesheet" href="css/maplibre-gl-6.9.1/maplibre-gl.css">
+  <link rel="stylesheet" href="css/maplibre-gl-6.14.0/maplibre-gl.css">
   <link rel="stylesheet" href="css/ui.css">
 
   <script type="module">
-    import * as maplibregl from './js/maplibre-gl-6.9.1/maplibre-gl.mjs';
+    import * as maplibregl from './js/maplibre-gl-6.14.0/maplibre-gl.mjs';
     window.maplibregl = maplibregl;
   </script>
   <script src="js/ui.js" defer></script>
@@ -259,12 +259,12 @@
                 <input class="form-check-input" type="radio" name="localization" id="localizationCustom" value="name" onchange="customLocalization(localizationCustomLanguageControl.value); localizationCustomLanguageControl.disabled = false">
                 <label class="form-check-label" for="localizationCustom">Custom: </label>
               </div>
-              <div class="form-check form-check-inline" style="padding-left: 0; width: 5rem">
+              <div class="form-check form-check-inline" style="padding-left: 0; width: 6rem">
                 <input type="text" class="form-control" name="localization-language" onchange="customLocalization(this.value)" id="localizationCustomLanguage" />
               </div>
             </div>
             <small class="form-text">
-              Control whether localization is enabled and what language is used. When specifying a custom language, use the language code as specified in <a href="https://en.wikipedia.org/wiki/ISO_639-1" target="_blank">ISO_639-1</a>, for example <code>en</code> for English.
+              Control whether localization is enabled and what languages are used. When specifying custom languages, use one or more language codes separated by a comma in order of preference as specified in <a href="https://en.wikipedia.org/wiki/ISO_639-1" target="_blank">ISO_639-1</a>, for example <code>de, jp, en</code> for German, Japanese and English.
             </small>
           </div>
         </form>

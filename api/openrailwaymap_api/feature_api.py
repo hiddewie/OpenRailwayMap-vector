@@ -15,10 +15,12 @@ def localize_fields(fields, localized_fields, lang):
         localized_value = value[spec['default']] if spec['default'] in value else None
 
         if lang is not None:
-            key = spec['key'].replace('{lang}', lang)
+            for split in lang.split(','):
+                key = spec['key'].replace('{lang}', split.strip())
 
-            if key in value:
-                localized_value = value[key]
+                if key in value:
+                    localized_value = value[key]
+                    break
 
         loc[field] = localized_value
 
