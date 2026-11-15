@@ -686,7 +686,6 @@ const sources = {
     type: 'vector',
     url: '/standard_railway_text_stations,standard_railway_grouped_stations,standard_railway_grouped_station_areas,standard_station_entrances,standard_railway_stop_positions,standard_interlocking,standard_interlocking_text',
     promoteId: 'id',
-    encoding: 'mlt',
     metadata: {
       supports: ['language'],
     },
@@ -700,22 +699,24 @@ const sources = {
     type: 'vector',
     url: '/standard_railway_platforms,standard_railway_platform_edges',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   openrailwaymap_signals: {
     type: 'vector',
     url: '/railway_signals',
     promoteId: 'id',
-    encoding: 'mlt',
   },
   openrailwaymap_boxes: {
     type: 'vector',
     url: '/signals_signal_boxes',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   openrailwaymap_catenary: {
     type: 'vector',
     url: '/electrification_catenary',
     promoteId: 'id',
+    encoding: 'mlt',
   },
   openrailwaymap_substation: {
     type: 'vector',
@@ -727,7 +728,6 @@ const sources = {
     type: 'vector',
     url: '/points_of_interest,points_of_interest_areas,level_crossings_grouped,level_crossings_grouped_buffered',
     promoteId: 'id',
-    encoding: 'mlt',
   },
   openhistoricalmap: {
     type: 'vector',
