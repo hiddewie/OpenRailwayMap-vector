@@ -1449,7 +1449,9 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
         ref,
         name,
         operator_color,
-        operator_bright
+        operator_bright,
+        owner_color,
+        owner_bright
       FROM signal_boxes_view b
       WHERE way && ST_TileEnvelope(z, x, y)
     ) as tile
@@ -1468,7 +1470,9 @@ DO $do$ BEGIN
           "ref": "string",
           "name": "string",
           "operator_color": "string",
-          "operator_bright": "string"
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
