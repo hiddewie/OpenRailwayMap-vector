@@ -1364,6 +1364,9 @@ const features = {
       operator: {
         name: 'Operator',
       },
+      owner: {
+        name: 'Owner',
+      },
       note: {
         name: 'Note',
         paragraph: true,

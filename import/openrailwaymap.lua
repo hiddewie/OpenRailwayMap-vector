@@ -473,6 +473,7 @@ local catenary = osm2pgsql.define_table({
     { column = 'insulator', type = 'text' },
     { column = 'position', sql_type = 'text[]' },
     { column = 'operator', type = 'text' },
+    { column = 'owner', type = 'text' },
     { column = 'note', type = 'text' },
     { column = 'description', type = 'text' },
   },
@@ -1435,6 +1436,7 @@ function osm2pgsql.process_node(object)
       insulator = tags.insulator,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       operator = tags.operator,
+      owner = tags.owner,
       note = tags.note,
       description = tags.description,
     })
@@ -1657,6 +1659,7 @@ function osm2pgsql.process_way(object)
       insulator = tags.insulator,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       operator = tags.operator,
+      owner = tags.owner,
       note = tags.note,
       description = tags.description,
     })

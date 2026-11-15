@@ -1534,7 +1534,7 @@ END $do$;
 
 CREATE OR REPLACE VIEW electrification_catenary_view AS
   SELECT
-    id,
+    c.id,
     osm_id,
     osm_type,
     way,
@@ -1548,9 +1548,24 @@ CREATE OR REPLACE VIEW electrification_catenary_view AS
     insulator,
     position,
     operator,
+    COALESCE(
+      ro.color,
+      'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)'
+    ) as operator_color,
+    coalesce(ro.bright, get_byte(sha256(operator::bytea), 0) between 44 AND 189) as operator_bright,
+    owner,
+    COALESCE(
+      ro2.color,
+      'hsl(' || get_byte(sha256(owner::bytea), 0) || ', 100%, 30%)'
+    ) as owner_color,
+    coalesce(ro.bright, get_byte(sha256(owner::bytea), 0) between 44 AND 189) as owner_bright,
     note,
     description
-  FROM catenary;
+  FROM catenary c
+  LEFT JOIN railway_operator ro
+    ON ro.name = operator
+  LEFT JOIN railway_operator ro2
+    ON ro2.name = owner;
 
 CREATE OR REPLACE FUNCTION electrification_catenary(z integer, x integer, y integer)
   RETURNS bytea
@@ -1567,7 +1582,11 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       ref,
-      transition
+      transition,
+      operator_color,
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM electrification_catenary_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -1584,7 +1603,11 @@ DO $do$ BEGIN
           "id": "string",
           "ref": "string",
           "feature": "string",
-          "transition": "boolean"
+          "transition": "boolean",
+          "operator_color": "string",
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
