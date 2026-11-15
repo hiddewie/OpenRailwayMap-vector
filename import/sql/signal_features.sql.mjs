@@ -3,8 +3,6 @@ import yaml from 'yaml'
 
 const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8'))
 
-const layers = [...new Set(signals_railway_signals.types.map(type => type.layer))]
-
 async function promiseResultsOrErrors(promises) {
   const results = await Promise.allSettled(promises);
   if (results.every(it => it.status === 'fulfilled')) {
@@ -27,12 +25,66 @@ async function parseSvgDimensions(feature) {
   }
 }
 
+// Subtypes of a type (types[].subtypes) are tag keys "railway:signal:<type>:<subtype>"
+// carrying their own signal, so that one node can show a feature per subtype.
+const subtypesOfType = Object.fromEntries(signals_railway_signals.types.map(type => [type.type, type.subtypes ?? []]))
+
+// Validate declared tags for type and subtype
+for (const [type, subtypes] of Object.entries(subtypesOfType)) {
+  const tag = `railway:signal:${type}`
+  if (!signals_railway_signals.tags.some(it => it.tag === tag)) {
+    throw new Error(`Signal type ${type} does not have tag ${tag} declared.`)
+  }
+  if (!signals_railway_signals.tags.some(it => it.tag === `${tag}:deactivated`) || signals_railway_signals.tags.find(it => it.tag === `${tag}:deactivated`).type !== 'boolean') {
+    throw new Error(`Signal type ${type} does not have tag ${tag}:deactivated declared and with a boolean type.`)
+  }
+  if (!signals_railway_signals.tags.some(it => it.tag === `${tag}:caption`)) {
+    throw new Error(`Signal type ${type} does not have tag ${tag}:caption declared.`)
+  }
+
+  for (const subtype of subtypes) {
+    const tag = `railway:signal:${type}:${subtype}`
+    if (!signals_railway_signals.tags.some(it => it.tag === tag)) {
+      throw new Error(`Signal type ${type} does not have tag ${tag} declared.`)
+    }
+    if (!signals_railway_signals.tags.some(it => it.tag === `${tag}:deactivated`) || signals_railway_signals.tags.find(it => it.tag === `${tag}:deactivated`).type !== 'boolean') {
+      throw new Error(`Signal type ${type} does not have tag ${tag}:deactivated declared and with a boolean type.`)
+    }
+    if (!signals_railway_signals.tags.some(it => it.tag === `${tag}:caption`)) {
+      throw new Error(`Signal type ${type} does not have tag ${tag}:caption declared.`)
+    }
+  }
+}
+
+// One feature column per type, plus one per subtype
+const featureColumns = signals_railway_signals.types.flatMap(type => [
+  { ...type, subtype: null, name: type.type },
+  ...(type.subtypes ?? []).map(subtype => ({ ...type, subtype, name: `${type.type}__${subtype}` })),
+])
+
 const signalsWithSignalType = await promiseResultsOrErrors(
   signals_railway_signals.features
-    // Determine a signal type per layer such that combined matching does not try to match other signal types for the same feature
-    .map(feature => ({
+    // Determine a signal type and subtype such that combined matching does not try to match other signal types for the same feature
+    .map(feature => {
+      const type = signals_railway_signals.types.find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type
+      if (!type) {
+        throw new Error(`Feature '${feature.description}' has no type`)
+      }
+      const subtypes = subtypesOfType[type].filter(subtype => feature.tags.some(it => it.tag === `railway:signal:${type}:${subtype}`))
+      if (subtypes.length > 1) {
+        throw new Error(`Feature '${feature.description}' has several subtypes of type ${type}: ${subtypes.join(', ')}`)
+      }
+
+      return {
+        ...feature,
+        signalType: type,
+        signalSubtype: subtypes.length > 0 ? subtypes[0] : null,
+      };
+    })
+    // Determine feature rank
+    .map((feature, index) => ({
       ...feature,
-      signalType: signals_railway_signals.types.find(type => feature.tags.find(it => it.tag === `railway:signal:${type.type}`))?.type,
+      rank: index,
     }))
     // Determine icon dimensions
     .map(async feature => ({
@@ -239,19 +291,19 @@ CREATE OR REPLACE VIEW signal_features_view AS
     SELECT
       osm_id as signal_id,
       railway,
-      ${signals_railway_signals.types.map(type => `
-      CASE 
-        WHEN "railway:signal:${type.type}" IS NOT NULL THEN
-          CASE ${signalsWithSignalType.map((feature, index) => ({...feature, rank: index })).filter(feature => feature.tags.find(it => it.tag === `railway:signal:${type.type}`)).map(feature => `
+      ${featureColumns.map(column => `
+      CASE
+        WHEN "railway:signal:${column.type}" IS NOT NULL${column.subtype ? ` AND "railway:signal:${column.type}:${column.subtype}" IS NOT NULL` : ''} THEN
+          CASE ${signalsWithSignalType.filter(feature => feature.tags.find(it => it.tag === `railway:signal:${column.type}`) && feature.signalSubtype === column.subtype).map(feature => `
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${matchFeatureTagsSql(feature.tags)}
-              THEN ${feature.signalType === type.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${type.type}:deactivated"::text, '${feature.rank}', "railway:signal:${type.type}:caption"])` : 'NULL'}
+              THEN ${feature.signalType === column.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:deactivated"::text, '${feature.rank}', "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:caption"])` : 'NULL'}
             `).join('')}
-            -- Unknown signal (${type.type})
-            ELSE
-              ARRAY['general/signal-unknown-${type.type}', NULL, '17.1', '0', '0', NULL, "railway:signal:${type.type}:deactivated"::text, NULL, "railway:signal:${type.type}:caption"]
+            -- Unknown signal (${column.type}), left to the subtype columns when a subtype key is present
+            ${column.subtype || subtypesOfType[column.type].length === 0 ? 'ELSE' : `WHEN ${subtypesOfType[column.type].map(subtype => `"railway:signal:${column.type}:${subtype}" IS NULL`).join(' AND ')} THEN`}
+              ARRAY['general/signal-unknown-${column.type}', NULL, '17.1', '0', '0', NULL, "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:deactivated"::text, NULL, "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:caption"]
         END
-      END as feature_${type.type}`).join(',')}
+      END as feature_${column.name}`).join(',')}
     FROM signals s
     WHERE
       (railway IN ('signal', 'buffer_stop') AND signal_direction IS NOT NULL)
@@ -259,19 +311,19 @@ CREATE OR REPLACE VIEW signal_features_view AS
   ),
   -- Output a feature row for every feature
   signals_with_features_1 AS (
-    ${signals_railway_signals.types.map(type => `
+    ${featureColumns.map(column => `
     SELECT
       signal_id,
-      feature_${type.type}[1] as feature,
-      feature_${type.type}[2] as feature_variable,
-      GREATEST(feature_${type.type}[3]::REAL + feature_${type.type}[4]::REAL, feature_${type.type}[5]::REAL) as icon_height,
-      feature_${type.type}[6] as type,
-      feature_${type.type}[7]::boolean as deactivated,
-      feature_${type.type}[8]::INT as rank,
-      feature_${type.type}[9] as caption,
-      '${type.category}' as category
+      feature_${column.name}[1] as feature,
+      feature_${column.name}[2] as feature_variable,
+      GREATEST(feature_${column.name}[3]::REAL + feature_${column.name}[4]::REAL, feature_${column.name}[5]::REAL) as icon_height,
+      feature_${column.name}[6] as type,
+      feature_${column.name}[7]::boolean as deactivated,
+      feature_${column.name}[8]::INT as rank,
+      feature_${column.name}[9] as caption,
+      '${column.category}' as category
     FROM signals_with_features_0
-    WHERE feature_${type.type} IS NOT NULL
+    WHERE feature_${column.name} IS NOT NULL
   `).join(`
     UNION ALL
   `)}
@@ -288,7 +340,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
       'other' as category
     FROM signals_with_features_0
     WHERE railway = 'signal'
-      AND ${signals_railway_signals.types.map(type => `feature_${type.type} IS NULL`).join(' AND ')}
+      AND ${featureColumns.map(column => `feature_${column.name} IS NULL`).join(' AND ')}
   )
   -- Group features by signal, and aggregate the results
   SELECT
