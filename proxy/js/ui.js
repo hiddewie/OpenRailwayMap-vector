@@ -1529,13 +1529,10 @@ const map = new maplibregl.Map({
   maxZoom: globalMaxZoom,
   attributionControl: false,
   renderWorldCopies: false,
-  ...(configuration.view || defaultConfiguration.view),
-});
-map.setStyle(`${location.origin}/style.json`, {
-  validate: false,
+  style: `${location.origin}/style.json`,
+  validateStyle: false,
   transformStyle: (previous, next) => {
     const language = configuredLanguage();
-
     rewriteStylePathsToOrigin(next)
     addLanguageToSupportedSources(next, language)
     return next;
@@ -1544,8 +1541,8 @@ map.setStyle(`${location.origin}/style.json`, {
     date: selectedDate === 'all' ? defaultDate : selectedDate,
     allDates: selectedDate === 'all',
     theme: selectedTheme,
-    bearing: map.getBearing() ?? 0,
-    pitched: pitchedView(map.getPitch() ?? 0),
+    bearing: (configuration.view || defaultConfiguration.view)?.bearing ?? 0,
+    pitched: pitchedView((configuration.view || defaultConfiguration.view)?.pitch ?? 0),
     stationLowZoomLabel: configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel,
     openHistoricalMap: (configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure) === 'openhistoricalmap',
     showAbandonedInfrastructure: (configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure) === 'openstreetmap',
@@ -1555,6 +1552,7 @@ map.setStyle(`${location.origin}/style.json`, {
     hillshade: configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade,
     ...selectedStyle,
   },
+  ...(configuration.view || defaultConfiguration.view),
 });
 
 function selectPreset(preset) {
