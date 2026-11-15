@@ -576,7 +576,7 @@ const knownStyles = {
       platforms: 'none',
       substations: 'none',
       boxes: 'operator',
-      catenaries: 'none',
+      catenaries: 'operator',
       switches: 'none',
       signals: [],
     },
@@ -849,6 +849,14 @@ const styleElements = [
       {
         name: 'Plain',
         value: 'plain',
+      },
+      {
+        name: 'Operator',
+        value: 'operator',
+      },
+      {
+        name: 'Owner',
+        value: 'owner',
       },
       {
         name: 'None',

@@ -1600,9 +1600,20 @@ CREATE OR REPLACE VIEW electrification_substation_view AS
     way,
     feature,
     ref,
-    name,
+    s.name,
     location,
     operator,
+    COALESCE(
+      ro.color,
+      'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)'
+    ) as operator_color,
+    coalesce(ro.bright, get_byte(sha256(operator::bytea), 0) between 44 AND 189) as operator_bright,
+    owner,
+    COALESCE(
+      ro2.color,
+      'hsl(' || get_byte(sha256(owner::bytea), 0) || ', 100%, 30%)'
+    ) as owner_color,
+    coalesce(ro.bright, get_byte(sha256(owner::bytea), 0) between 44 AND 189) as owner_bright,
     voltage,
     frequency,
     conversion,
@@ -1614,7 +1625,11 @@ CREATE OR REPLACE VIEW electrification_substation_view AS
     wikipedia,
     note,
     description
-  FROM substation;
+  FROM substation s
+  LEFT JOIN railway_operator ro
+    ON ro.name = operator
+  LEFT JOIN railway_operator ro2
+    ON ro2.name = owner;
 
 CREATE OR REPLACE FUNCTION electrification_substation(z integer, x integer, y integer)
   RETURNS bytea
@@ -1629,7 +1644,11 @@ RETURN (
     SELECT
       id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      name
+      name,
+      operator_color,
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM electrification_substation_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -1644,7 +1663,11 @@ DO $do$ BEGIN
         "id": "electrification_substation",
         "fields": {
           "id": "integer",
-          "name": "string"
+          "name": "string",
+          "operator_color": "string",
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]

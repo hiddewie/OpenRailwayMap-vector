@@ -3547,13 +3547,18 @@ const layers = [
     paint: {
       'fill-color': ['case',
         ['boolean', ['feature-state', 'hover'], false], colors.hover.main,
-        colors.substation,
+        ['match', ['global-state', 'substations'],
+          'plain', colors.substation,
+          'operator', ['coalesce', ['get', 'operator_color'], 'gray'],
+          'owner', ['coalesce', ['get', 'owner_color'], 'gray'],
+          'gray',
+        ],
       ],
     },
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'substations'], 'plain'], 'visible',
+        ['in', ['global-state', 'substations'], ['literal', ['plain', 'operator', 'owner']]], 'visible',
         'none',
       ],
     },
@@ -3574,7 +3579,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'substations'], 'plain'], 'visible',
+        ['in', ['global-state', 'substations'], ['literal', ['plain', 'operator', 'owner']]], 'visible',
         'none',
       ],
     },
@@ -4829,7 +4834,12 @@ const layers = [
     'source-layer': 'electrification_substation',
     filter: ['!=', ['get', 'name'], null],
     paint: {
-      'text-color': colors.substationText,
+      'text-color': ['match', ['global-state', 'substations'],
+        'plain', colors.substationText,
+        'operator', ['coalesce', ['get', 'operator_color'], 'gray'],
+        'owner', ['coalesce', ['get', 'owner_color'], 'gray'],
+        'gray',
+      ],
       'text-halo-color': ['case',
         ['boolean', ['feature-state', 'hover'], false], colors.hover.textHalo,
         colors.halo,
@@ -4839,7 +4849,7 @@ const layers = [
     layout: {
       'visibility': ['case',
         ['<', ['global-state', 'date'], defaultDate], 'none',
-        ['==', ['global-state', 'substations'], 'plain'], 'visible',
+        ['in', ['global-state', 'substations'], ['literal', ['plain', 'operator', 'owner']]], 'visible',
         'none',
       ],
       'text-field': '{name}',
@@ -5463,7 +5473,7 @@ const makeStyle = () => ({
       default: 'plain',
     },
     substations: {
-      // Values: plain, none
+      // Values: plain, operator, owner, none
       default: 'none',
     },
     boxes: {
