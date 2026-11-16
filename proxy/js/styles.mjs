@@ -4216,14 +4216,19 @@ const layers = [
           'icon-overlap': 'always',
           'icon-offset': ['interpolate', ['linear'],
             ['+',
-              featureIndex === 0 ? 0 : ['+',
+              ['+',
+                ['case',
+                  // First visible icon
+                  ...Array.from(Array(featureIndex + 1), (_, i) => i).flatMap(i => [
+                    ['in', ['get', `category${i}`], ['global-state', 'signals']],
+                    ['-', ['/', ['get', `icon_height${i}`], 2]],
+                  ]),
+                  0,
+                ],
                 ...Array.from(Array(featureIndex), (_, i) =>
                   ['case',
-                    ['all',
-                      ['!=', ['get', `feature${i}`], null],
-                      ['in', ['get', `category${i}`], ['global-state', 'signals']],
-                    ], i === 0 ? ['/', ['get', `icon_height${i}`], 2] : ['get', `icon_height${i}`],
-                    // i === featureIndex - 1 ? ['/', ['get', `icon_height${i}`], 2] :
+                    ['in', ['get', `category${i}`], ['global-state', 'signals']],
+                    ['get', `icon_height${i}`],
                     0,
                   ]),
                 ['/', ['get', `icon_height${featureIndex}`], 2],
@@ -4246,7 +4251,14 @@ const layers = [
                     ], 4,
                     0,
                   ], // Derail and buffer stop icons
-                  ['/', ['get', 'icon_height0'], 2], // Icon is shown above anchor in pitched view
+                  ['case',
+                    // First visible icon, icon is shown above anchor in pitched view
+                    ...Array.from(Array(featureIndex + 1), (_, i) => i).flatMap(i => [
+                      ['in', ['get', `category${i}`], ['global-state', 'signals']],
+                      ['/', ['get', `icon_height${i}`], 2],
+                    ]),
+                    0,
+                  ],
                   4, // Signal anchor
                   ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
                   ['case', ['!=', ['get', 'caption'], null], 9 * 1.2, 0], // Caption
@@ -4282,14 +4294,18 @@ const layers = [
         'icon-image': 'general/signal-deactivated',
         'icon-offset': ['interpolate', ['linear'],
           ['+',
-            featureIndex === 0 ? 0 : ['+',
+            ['+',
+              ['case',
+                // First visible icon
+                ...Array.from(Array(featureIndex + 1), (_, i) => i).flatMap(i => [
+                  ['in', ['get', `category${i}`], ['global-state', 'signals']],
+                  ['-', ['/', ['get', `icon_height${i}`], 2]],
+                ]),
+                0,
+              ],
               ...Array.from(Array(featureIndex), (_, i) =>
                 ['case',
-                  ['all',
-                    ['!=', ['get', `feature${i}`], null],
-                    ['in', ['get', `category${i}`], ['global-state', 'signals']],
-                  ], i === 0 ? ['/', ['get', `icon_height${i}`], 2] : ['get', `icon_height${i}`],
-                  // i === featureIndex - 1 ? ['/', ['get', `icon_height${i}`], 2] :
+                  ['in', ['get', `category${i}`], ['global-state', 'signals']], ['get', `icon_height${i}`],
                   0,
                 ]),
               ['/', ['get', `icon_height${featureIndex}`], 2],
@@ -4312,7 +4328,14 @@ const layers = [
                   ], 4,
                   0
                 ], // Derail and buffer stop icons
-                ['/', ['get', 'icon_height0'], 2], // Icon is shown above anchor in pitched view
+                ['case',
+                  // First visible icon, icon is shown above anchor in pitched view
+                  ...Array.from(Array(featureIndex + 1), (_, i) => i).flatMap(i => [
+                    ['in', ['get', `category${i}`], ['global-state', 'signals']],
+                    ['/', ['get', `icon_height${i}`], 2],
+                  ]),
+                  0,
+                ],
                 4, // Signal anchor
                 ['case', ['!=', ['get', 'ref'], null], 9 * 1.2, 0], // Reference
                 ['case', ['!=', ['get', 'caption'], null], 9 * 1.2, 0], // Caption
@@ -4374,7 +4397,14 @@ const layers = [
         ['case',
           ['==', ['global-state', 'pitched'], false],
           ['+',
-            ['/', ['get', 'icon_height0'], 2],
+            ['case',
+              // First visible icon
+              ...Array.from(Array(signalFeatureIndices[signalFeatureIndices.length - 1] + 1), (_, i) => i).flatMap(i => [
+                ['in', ['get', `category${i}`], ['global-state', 'signals']],
+                ['/', ['get', `icon_height${i}`], 2],
+              ]),
+              0,
+            ],
             ['case',
               ['all', // Derail and buffer stop icons
                 ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
@@ -4388,8 +4418,8 @@ const layers = [
             ['all', // Derail and buffer stop icons
               ['in', ['get', 'railway'], ['literal', ['derail', 'buffer_stop']]],
               ['in', 'train_protection', ['global-state', 'pois']],
-            ], -5,
-            -1,
+            ], -7,
+            -3,
           ],
         ],
         -20 * 9, ['literal', [0, -20]],
