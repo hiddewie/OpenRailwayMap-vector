@@ -576,7 +576,7 @@ const knownStyles = {
       platforms: 'none',
       substations: 'none',
       boxes: 'operator',
-      catenaries: 'none',
+      catenaries: 'operator',
       switches: 'none',
       signals: [],
     },
@@ -651,6 +651,10 @@ const styleElements = [
         value: 'operator',
       },
       {
+        name: 'Owner',
+        value: 'owner',
+      },
+      {
         name: 'Routes',
         value: 'routes',
       },
@@ -681,6 +685,10 @@ const styleElements = [
       {
         name: 'Operator',
         value: 'operator',
+      },
+      {
+        name: 'Owner',
+        value: 'owner',
       },
       {
         name: 'None',
@@ -823,6 +831,10 @@ const styleElements = [
         value: 'operator',
       },
       {
+        name: 'Owner',
+        value: 'owner',
+      },
+      {
         name: 'None',
         value: 'none',
       },
@@ -837,6 +849,14 @@ const styleElements = [
       {
         name: 'Plain',
         value: 'plain',
+      },
+      {
+        name: 'Operator',
+        value: 'operator',
+      },
+      {
+        name: 'Owner',
+        value: 'owner',
       },
       {
         name: 'None',
@@ -857,6 +877,10 @@ const styleElements = [
       {
         name: 'Operator',
         value: 'operator',
+      },
+      {
+        name: 'Owner',
+        value: 'owner',
       },
       {
         name: 'None',

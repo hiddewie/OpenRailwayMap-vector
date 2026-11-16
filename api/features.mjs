@@ -1292,6 +1292,9 @@ const features = {
       operator: {
         name: 'Operator',
       },
+      owner: {
+        name: 'Owner',
+      },
       wikidata: {
         name: 'Wikidata',
         link: links.wikidata,
@@ -1361,6 +1364,9 @@ const features = {
       operator: {
         name: 'Operator',
       },
+      owner: {
+        name: 'Owner',
+      },
       note: {
         name: 'Note',
         paragraph: true,
@@ -1394,6 +1400,9 @@ const features = {
       },
       operator: {
         name: 'Operator',
+      },
+      owner: {
+        name: 'Owner',
       },
       conversion: {
         name: 'Conversion',

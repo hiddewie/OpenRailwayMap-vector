@@ -432,7 +432,7 @@ const sourceLayers = {
         tracks: 'operator',
       },
       key: [
-        'primary_operator',
+        'operator_color',
       ],
       features: [
         ...operators.operators.map(operator => ({
@@ -440,8 +440,6 @@ const sourceLayers = {
           type: 'line',
           country: operator.country,
           properties: {
-            operator: operator.names[0],
-            primary_operator: operator.names[0],
             operator_color: operator.color,
             feature: 'rail',
             state: 'present',
@@ -455,9 +453,44 @@ const sourceLayers = {
           legend: '(unknown)',
           type: 'line',
           properties: {
-            operator: null,
-            primary_operator: null,
             operator_color: null,
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+          },
+        },
+      ],
+    },
+    owner: {
+      mapState: {
+        tracks: 'owner',
+      },
+      key: [
+        'owner_color',
+      ],
+      features: [
+        ...operators.operators.map(operator => ({
+          legend: operator.names.join(', '),
+          type: 'line',
+          country: operator.country,
+          properties: {
+            owner_color: operator.color,
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+          },
+        })),
+        {
+          legend: '(unknown)',
+          type: 'line',
+          properties: {
+            owner_color: null,
             feature: 'rail',
             state: 'present',
             usage: 'main',
@@ -1961,6 +1994,45 @@ const sourceLayers = {
         },
       ],
     },
+    owner: {
+      mapState: {
+        tracks: 'owner',
+      },
+      key: [
+        'owner',
+      ],
+      features: [
+        ...operators.operators.map(operator => ({
+          legend: operator.names.join(', '),
+          type: 'line',
+          country: operator.country,
+          properties: {
+            owner: operator.names[0],
+            owner_color: operator.color,
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+          },
+        })),
+        {
+          legend: '(unknown)',
+          type: 'line',
+          properties: {
+            owner: null,
+            owner_color: null,
+            feature: 'rail',
+            state: 'present',
+            usage: 'main',
+            service: null,
+            bridge: false,
+            tunnel: false,
+          },
+        },
+      ],
+    },
     routes: {
       mapState: {
         tracks: 'routes',
@@ -2617,6 +2689,29 @@ const sourceLayers = {
     operator: {
       mapState: {
         tracks: 'operator',
+      },
+      key: [],
+      features: [
+        {
+          legend: 'Railway line (historical)',
+          type: 'line',
+          minzoom: 5,
+          properties: {
+            class: 'railway',
+            type: 'rail',
+            usage: 'main',
+            service: null,
+            tunnel: 0,
+            bridge: 0,
+            ref: 'H1',
+            name: 'H1 Name',
+          },
+        },
+      ],
+    },
+    owner: {
+      mapState: {
+        tracks: 'owner',
       },
       key: [],
       features: [
