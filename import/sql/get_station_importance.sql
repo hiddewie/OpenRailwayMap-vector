@@ -5,26 +5,24 @@
 -- Get OSM IDs route relations referencing a stop position or a station/halt node
 CREATE OR REPLACE VIEW stops_and_route_relations AS
   SELECT
-    r.osm_id AS rel_id,
+    rs.route_id AS rel_id,
     sp.osm_id AS stop_id,
     sp.name AS stop_name,
     sp.way AS geom
   FROM stop_positions AS sp
   JOIN route_stop rs
-    ON rs.stop_id = sp.osm_id
-  JOIN routes r
-    ON r.osm_id = rs.route_id;
+    ON rs.stop_id = sp.osm_id;
 
--- Get OSM IDs of route relations referencing a platform (all except nodes)
+-- Get OSM IDs of route relations referencing a platform
 CREATE OR REPLACE VIEW platforms_route_relations AS
   SELECT
-    r.osm_id AS rel_id,
-    sp.osm_id AS stop_id,
-    sp.name AS stop_name,
-    sp.way AS geom
-  FROM platforms AS sp
-  JOIN routes AS r
-    ON r.platform_ref_ids @> Array[sp.osm_id];
+    rp.route_id AS rel_id,
+    p.osm_id AS stop_id,
+    p.name AS stop_name,
+    p.way AS geom
+  FROM platforms AS p
+  JOIN route_platform rp
+    ON rp.platform_id = p.id;
 
 -- Cluster stop positions with equal name
 CREATE OR REPLACE VIEW stop_positions_and_their_routes_clustered AS
@@ -84,7 +82,7 @@ CREATE OR REPLACE VIEW station_nodes_stop_positions_rel_count AS
 CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
   SELECT
     id,
-    array_agg(route_id) as route_ids
+    array_agg(DISTINCT route_id) as route_ids
   FROM (
     SELECT
       s.id as id,
@@ -98,14 +96,18 @@ CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
 
     SELECT
       s.id as id,
-      r.osm_id as route_id
+      rp.route_id as route_id
     FROM stations s
     JOIN stations_stop_areas ssa
       ON ssa.station_id = s.id
     JOIN stop_areas sa
       ON ssa.stop_area_osm_id = sa.osm_id
-    JOIN routes r
-      ON sa.platform_ref_ids && r.platform_ref_ids
+    JOIN stop_area_platforms sap
+      ON sap.stop_area_id = sa.osm_id
+    JOIN platforms p
+      ON sap.platform_id = p.id
+    JOIN route_platform rp
+      ON rp.platform_id = p.id
   ) sr
   GROUP BY id;
 

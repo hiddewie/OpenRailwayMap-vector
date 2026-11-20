@@ -40,7 +40,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { id = 'node-123-train', feature = 'halt', state = 'present', station = 'train', name_tags = {}, references = {} },
+    { id = 'node-123-train', feature = 'halt', state = 'present', station = 'train', name_tags = {} },
   },
 })
 
@@ -54,7 +54,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { id = 'node-123-tram', feature = 'tram_stop', state = 'present', station = 'tram', name_tags = {}, references = {} },
+    { id = 'node-123-tram', feature = 'tram_stop', state = 'present', station = 'tram', name_tags = {} },
   },
 })
 
@@ -68,7 +68,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { id = 'node-123-train', feature = 'service_station', state = 'present', station = 'train', name_tags = {}, references = {} },
+    { id = 'node-123-train', feature = 'service_station', state = 'present', station = 'train', name_tags = {} },
   },
 })
 
@@ -82,7 +82,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { id = 'node-123-train', feature = 'yard', state = 'preserved', station = 'train', name_tags = {}, references = {} },
+    { id = 'node-123-train', feature = 'yard', state = 'preserved', station = 'train', name_tags = {} },
   },
 })
 
@@ -98,7 +98,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { id = 'node-123-train', feature = 'yard', state = 'present', station = 'train', name_tags = {}, yard_hump = true, yard_purpose = '{"transloading","manifest"}', references = {} },
+    { id = 'node-123-train', feature = 'yard', state = 'present', station = 'train', name_tags = {}, yard_hump = true, yard_purpose = '{"transloading","manifest"}' },
   },
 })
 
@@ -112,7 +112,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { id = 'node-123-train', feature = 'junction', state = 'abandoned', station = 'train', name_tags = {}, references = {} },
+    { id = 'node-123-train', feature = 'junction', state = 'abandoned', station = 'train', name_tags = {} },
   },
 })
 
@@ -126,7 +126,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { id = 'node-123-train', feature = 'spur_junction', state = 'disused', station = 'train', name_tags = {}, references = {} },
+    { id = 'node-123-train', feature = 'spur_junction', state = 'disused', station = 'train', name_tags = {} },
   },
 })
 
@@ -141,7 +141,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { id = 'node-123-train', feature = 'crossover', state = 'proposed', station = 'train', name = 'name', name_tags = { ['proposed:name'] = 'name' }, references = {} },
+    { id = 'node-123-train', feature = 'crossover', state = 'proposed', station = 'train', name = 'name', name_tags = { ['proposed:name'] = 'name' } },
   },
 })
 
@@ -156,7 +156,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { id = 'node-123-train', feature = 'site', state = 'construction', station = 'train', name = 'name', name_tags = { ['construction:name'] = 'name' }, references = {} },
+    { id = 'node-123-train', feature = 'site', state = 'construction', station = 'train', name = 'name', name_tags = { ['construction:name'] = 'name' } },
   },
 })
 
@@ -170,7 +170,7 @@ osm2pgsql.process_node({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { id = 'node-123-train', feature = 'station', state = 'razed', station = 'train', name_tags = {}, references = {} },
+    { id = 'node-123-train', feature = 'station', state = 'razed', station = 'train', name_tags = {} },
   },
 })
 
@@ -258,6 +258,6 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stations = {
-    { id = 'relation-123-train', way = way, name_tags = {}, station = 'train', state = 'present', references = {}, feature = 'yard' },
+    { id = 'relation-123-train', way = way, name_tags = {}, station = 'train', state = 'present', feature = 'yard' },
   },
 })

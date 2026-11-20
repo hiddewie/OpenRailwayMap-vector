@@ -519,11 +519,8 @@ local routes = osm2pgsql.define_table({
     { column = 'operator', type = 'text' },
     { column = 'brand', type = 'text' },
     { column = 'color', type = 'text' },
-    { column = 'platform_ref_ids', sql_type = 'int8[]' },
   },
-  indexes = {
-    { column = 'platform_ref_ids', method = 'gin' },
-  },
+  indexes = {},
 })
 
 local route_line = osm2pgsql.define_table({
@@ -551,18 +548,28 @@ local route_stop = osm2pgsql.define_table({
   },
 })
 
+local route_platform = osm2pgsql.define_table({
+  name = 'route_platform',
+  ids = { type = 'relation', id_column = 'route_id' },
+  columns = {
+    { column = 'platform_id', type = 'text', not_null = true },
+    { column = 'role', sql_type = 'route_platform_type', not_null = true },
+  },
+  indexes = {
+    { column = 'route_id', method = 'btree' },
+    { column = 'platform_id', method = 'btree' },
+  },
+})
+
 local stop_areas = osm2pgsql.define_table({
   name = 'stop_areas',
   ids = { type = 'relation', id_column = 'osm_id', create_index = 'primary_key' },
   columns = {
-    { column = 'platform_ref_ids', sql_type = 'int8[]' },
     { column = 'node_ref_ids', sql_type = 'int8[]' },
     { column = 'way_ref_ids', sql_type = 'int8[]' },
     { column = 'references', type = 'hstore' },
   },
-  indexes = {
-    { column = 'platform_ref_ids', method = 'gin' },
-  },
+  indexes = {},
 })
 
 local stop_area_route_stops = osm2pgsql.define_table({
@@ -580,7 +587,7 @@ local stop_area_platforms = osm2pgsql.define_table({
   name = 'stop_area_platforms',
   ids = { type = 'relation', id_column = 'stop_area_id' },
   columns = {
-    { column = 'platform_id', sql_type = 'int8' },
+    { column = 'platform_id', type = 'text', not_null = true },
   },
   indexes = {
     { column = 'stop_area_id', method = 'btree' },
@@ -874,6 +881,12 @@ function split_semicolon_to_sql_array(value)
   return to_sql_array(split_semicolon(value))
 end
 
+local object_types_by_member_type = {
+  n = 'node',
+  w = 'way',
+  r = 'relation',
+}
+
 local railway_state_tags = {
   present = {
     railway = 'railway',
@@ -950,17 +963,19 @@ end
 
 function station_references(tags)
   local found_references = {}
+  local has_references = false
 
   for _, reference in ipairs(tag_functions.station_references) do
     for _, tag in ipairs(reference.tags) do
       if tags[tag] then
         found_references[reference.id] = tags[tag]
+        has_references = true
         break
       end
     end
   end
 
-  return found_references
+  return has_references and found_references or nil
 end
 
 function position_is_zero(position)
@@ -1735,7 +1750,6 @@ function osm2pgsql.process_relation(object)
 
   if tags.type == 'route' and route_values(tags.route) then
     local has_members = false
-    local platform_members = {}
     for _, member in ipairs(object.members) do
       if route_stop_relation_roles(member.role) then
         route_stop:insert({
@@ -1744,7 +1758,10 @@ function osm2pgsql.process_relation(object)
         })
         has_members = true
       elseif route_platform_relation_roles(member.role) then
-        table.insert(platform_members, member.ref)
+        route_platform:insert({
+          platform_id = string.format("%s-%d", object_types_by_member_type[member.type], member.ref),
+          role = member.role,
+        })
         has_members = true
       elseif (member.role == nil or member.role == '') and member.type == 'w' then
         route_line:insert({
@@ -1764,14 +1781,14 @@ function osm2pgsql.process_relation(object)
         operator = tags.operator,
         brand = tags.brand,
         color = tags.colour,
-        platform_ref_ids = '{' .. table.concat(platform_members, ',') .. '}',
       })
     end
   end
 
   if tags.type == 'public_transport' and tags.public_transport == 'stop_area' then
     local has_members = false
-    local stop_members = {}
+    local has_node_members = false
+    local has_way_members = false
     local node_members = {}
     local way_members = {}
     for _, member in ipairs(object.members) do
@@ -1782,24 +1799,26 @@ function osm2pgsql.process_relation(object)
         has_members = true
       elseif member.role == 'platform' then
         stop_area_platforms:insert({
-          platform_id = member.ref,
+          platform_id = string.format("%s-%d", object_types_by_member_type[member.type], member.ref),
         })
         has_members = true
       elseif member.type == 'n' then
         -- Station has no role defined
         table.insert(node_members, member.ref)
         has_members = true
+        has_node_members = true
       elseif member.type == 'w' then
         -- Station has no role defined
         table.insert(way_members, member.ref)
         has_members = true
+        has_way_members = true
       end
     end
 
     if has_members then
       stop_areas:insert({
-        node_ref_ids = '{' .. table.concat(node_members, ',') .. '}',
-        way_ref_ids = '{' .. table.concat(way_members, ',') .. '}',
+        node_ref_ids = has_node_members and ('{' .. table.concat(node_members, ',') .. '}') or nil,
+        way_ref_ids = has_way_members and ('{' .. table.concat(way_members, ',') .. '}') or nil,
         references = station_references(tags),
       })
     end
