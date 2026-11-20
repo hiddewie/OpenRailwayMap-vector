@@ -58,6 +58,8 @@ RETURN (
       operator_bright,
       primary_operator,
       owner,
+      owner_color,
+      owner_bright,
       route_count,
       passenger_lines,
       rack,
@@ -163,6 +165,8 @@ DO $do$ BEGIN
           "operator_bright": "string",
           "primary_operator": "string",
           "owner": "string",
+          "owner_color": "string",
+          "owner_bright": "string",
           "route_count": "integer",
           "passenger_lines": "integer",
           "rack": "string",
@@ -304,13 +308,18 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     discr_iso,
     count,
     gs.operator as operator,
-    owner,
+    gs.owner as owner,
     network,
     COALESCE(
       ro.color,
       'hsl(' || get_byte(sha256(gs.operator[1]::bytea), 0) || ', 100%, 30%)'
     ) as operator_color,
     coalesce(ro.bright, get_byte(sha256(gs.operator[1]::bytea), 0) between 44 AND 189) as operator_bright,
+    COALESCE(
+      ro2.color,
+      'hsl(' || get_byte(sha256(gs.owner[1]::bytea), 0) || ', 100%, 30%)'
+    ) as owner_color,
+    coalesce(ro.bright, get_byte(sha256(gs.owner[1]::bytea), 0) between 44 AND 189) as owner_bright,
     position,
     wikidata,
     wikimedia_commons,
@@ -326,6 +335,8 @@ CREATE OR REPLACE VIEW railway_text_stations AS
   FROM grouped_stations_with_importance gs
   LEFT JOIN railway_operator ro
     ON ro.name = operator[1]
+  LEFT JOIN railway_operator ro2
+    ON ro2.name = owner[1]
   ORDER BY
     rank DESC NULLS LAST,
     importance DESC NULLS LAST;
@@ -348,7 +359,9 @@ RETURN (
       COALESCE(localize(name_tags, 'name:', string_to_array(query->>'lang', ',')), name) AS localized_name,
       station_size,
       operator_color,
-      operator_bright
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM railway_text_stations
     WHERE buffered && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
@@ -375,7 +388,9 @@ DO $do$ BEGIN
           "localized_name": "string",
           "station_size": "string",
           "operator_color": "string",
-          "operator_bright": "string"
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -401,7 +416,9 @@ RETURN (
       COALESCE(localize(name_tags, 'name:', string_to_array(query->>'lang', ',')), name) AS localized_name,
       station_size,
       operator_color,
-      operator_bright
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM railway_text_stations
     WHERE buffered && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
@@ -428,7 +445,9 @@ DO $do$ BEGIN
           "localized_name": "string",
           "station_size": "string",
           "operator_color": "string",
-          "operator_bright": "string"
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -517,7 +536,9 @@ RETURN (
       COALESCE(localize(name_tags, 'name:', string_to_array(query->>'lang', ',')), name) AS localized_name,
       count,
       operator_color,
-      operator_bright
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM railway_text_stations
     WHERE buffered && ST_TileEnvelope(z, x, y)
       -- conditionally include features based on zoom level
@@ -561,6 +582,8 @@ DO $do$ BEGIN
           "localized_name": "string",
           "operator_color": "string",
           "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string",
           "count": "integer"
         }
       }
@@ -586,7 +609,9 @@ RETURN (
       state,
       station,
       operator_color,
-      operator_bright
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM railway_text_stations
     WHERE buffered && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -605,7 +630,9 @@ DO $do$ BEGIN
           "state": "string",
           "station": "string",
           "operator_color": "string",
-          "operator_bright": "string"
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -1377,6 +1404,12 @@ CREATE OR REPLACE VIEW signal_boxes_view AS
       'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)'
     ) as operator_color,
     coalesce(ro.bright, get_byte(sha256(operator::bytea), 0) between 44 AND 189) as operator_bright,
+    owner,
+    COALESCE(
+      ro2.color,
+      'hsl(' || get_byte(sha256(owner::bytea), 0) || ', 100%, 30%)'
+    ) as owner_color,
+    coalesce(ro.bright, get_byte(sha256(owner::bytea), 0) between 44 AND 189) as owner_bright,
     position,
     wikimedia_commons,
     wikimedia_commons_file,
@@ -1388,7 +1421,9 @@ CREATE OR REPLACE VIEW signal_boxes_view AS
     description
   FROM boxes b
   LEFT JOIN railway_operator ro
-    ON ro.name = operator;
+    ON ro.name = operator
+  LEFT JOIN railway_operator ro2
+    ON ro2.name = owner;
 
 CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
   RETURNS bytea
@@ -1414,7 +1449,9 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
         ref,
         name,
         operator_color,
-        operator_bright
+        operator_bright,
+        owner_color,
+        owner_bright
       FROM signal_boxes_view b
       WHERE way && ST_TileEnvelope(z, x, y)
     ) as tile
@@ -1433,7 +1470,9 @@ DO $do$ BEGIN
           "ref": "string",
           "name": "string",
           "operator_color": "string",
-          "operator_bright": "string"
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -1495,7 +1534,7 @@ END $do$;
 
 CREATE OR REPLACE VIEW electrification_catenary_view AS
   SELECT
-    id,
+    c.id,
     osm_id,
     osm_type,
     way,
@@ -1509,9 +1548,24 @@ CREATE OR REPLACE VIEW electrification_catenary_view AS
     insulator,
     position,
     operator,
+    COALESCE(
+      ro.color,
+      'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)'
+    ) as operator_color,
+    coalesce(ro.bright, get_byte(sha256(operator::bytea), 0) between 44 AND 189) as operator_bright,
+    owner,
+    COALESCE(
+      ro2.color,
+      'hsl(' || get_byte(sha256(owner::bytea), 0) || ', 100%, 30%)'
+    ) as owner_color,
+    coalesce(ro.bright, get_byte(sha256(owner::bytea), 0) between 44 AND 189) as owner_bright,
     note,
     description
-  FROM catenary;
+  FROM catenary c
+  LEFT JOIN railway_operator ro
+    ON ro.name = operator
+  LEFT JOIN railway_operator ro2
+    ON ro2.name = owner;
 
 CREATE OR REPLACE FUNCTION electrification_catenary(z integer, x integer, y integer)
   RETURNS bytea
@@ -1528,7 +1582,11 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       ref,
-      transition
+      transition,
+      operator_color,
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM electrification_catenary_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -1545,7 +1603,11 @@ DO $do$ BEGIN
           "id": "string",
           "ref": "string",
           "feature": "string",
-          "transition": "boolean"
+          "transition": "boolean",
+          "operator_color": "string",
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -1561,9 +1623,20 @@ CREATE OR REPLACE VIEW electrification_substation_view AS
     way,
     feature,
     ref,
-    name,
+    s.name,
     location,
     operator,
+    COALESCE(
+      ro.color,
+      'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)'
+    ) as operator_color,
+    coalesce(ro.bright, get_byte(sha256(operator::bytea), 0) between 44 AND 189) as operator_bright,
+    owner,
+    COALESCE(
+      ro2.color,
+      'hsl(' || get_byte(sha256(owner::bytea), 0) || ', 100%, 30%)'
+    ) as owner_color,
+    coalesce(ro.bright, get_byte(sha256(owner::bytea), 0) between 44 AND 189) as owner_bright,
     voltage,
     frequency,
     conversion,
@@ -1575,7 +1648,11 @@ CREATE OR REPLACE VIEW electrification_substation_view AS
     wikipedia,
     note,
     description
-  FROM substation;
+  FROM substation s
+  LEFT JOIN railway_operator ro
+    ON ro.name = operator
+  LEFT JOIN railway_operator ro2
+    ON ro2.name = owner;
 
 CREATE OR REPLACE FUNCTION electrification_substation(z integer, x integer, y integer)
   RETURNS bytea
@@ -1590,7 +1667,11 @@ RETURN (
     SELECT
       id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      name
+      name,
+      operator_color,
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM electrification_substation_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -1605,7 +1686,11 @@ DO $do$ BEGIN
         "id": "electrification_substation",
         "fields": {
           "id": "integer",
-          "name": "string"
+          "name": "string",
+          "operator_color": "string",
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -1689,7 +1774,8 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       state,
-      operator_color
+      operator_color,
+      owner_color
     FROM railway_line_low_grouped l
     WHERE way && ST_TileEnvelope(z, x, y)
     ORDER by
@@ -1708,7 +1794,8 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "operator_color": "string"
+          "operator_color": "string",
+          "owner_color": "string"
         }
       }
     ]

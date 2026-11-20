@@ -1,6 +1,6 @@
 -- Views for railway lines, materialized for more efficient queries
 
-CREATE MATERIALIZED VIEW line_route_count AS
+CREATE MATERIALIZED VIEW IF NOT EXISTS line_route_count AS
   SELECT
     count(*) AS route_count,
     l.id AS id
@@ -11,7 +11,7 @@ CREATE MATERIALIZED VIEW line_route_count AS
     ON rl.route_id = r.osm_id
   GROUP BY l.id;
 
-CREATE UNIQUE INDEX line_route_count_id
+CREATE UNIQUE INDEX IF NOT EXISTS line_route_count_id
   ON line_route_count (id);
 
 CREATE OR REPLACE VIEW railway_line_view AS
@@ -68,6 +68,11 @@ CREATE OR REPLACE VIEW railway_line_view AS
     coalesce(ro.bright, get_byte(sha256(primary_operator::bytea), 0) between 44 AND 189) as operator_bright,
     primary_operator,
     owner,
+    COALESCE(
+      ro2.color,
+      'hsl(' || get_byte(sha256(owner::bytea), 0) || ', 100%, 30%)'
+    ) as owner_color,
+    coalesce(ro.bright, get_byte(sha256(owner::bytea), 0) between 44 AND 189) as owner_bright,
     traffic_mode,
     radio,
     rubber_tires,
@@ -151,6 +156,8 @@ CREATE OR REPLACE VIEW railway_line_view AS
   ) AS r
   LEFT JOIN railway_operator ro
     ON ro.name = primary_operator
+  LEFT JOIN railway_operator ro2
+    ON ro2.name = owner
   LEFT JOIN line_route_count rl
     ON rl.id = r.id;
 
@@ -184,6 +191,7 @@ CREATE OR REPLACE VIEW railway_line_low_grouped_view AS
     loading_gauge,
     passenger_lines,
     operator_color,
+    owner_color,
     route_count,
     max(rank) as rank
   FROM railway_line_view l
@@ -214,6 +222,7 @@ CREATE OR REPLACE VIEW railway_line_low_grouped_view AS
     loading_gauge,
     passenger_lines,
     operator_color,
+    owner_color,
     route_count;
 
 CREATE MATERIALIZED VIEW IF NOT EXISTS railway_line_low_grouped AS
@@ -221,7 +230,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS railway_line_low_grouped AS
     *
   FROM railway_line_low_grouped_view;
 
-CREATE INDEX railway_line_low_grouped_way
+CREATE INDEX IF NOT EXISTS railway_line_low_grouped_way
   ON railway_line_low_grouped
     USING GIST(way);
 

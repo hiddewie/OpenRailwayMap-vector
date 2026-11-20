@@ -143,37 +143,6 @@ function wikimedia_commons_or_image(wikimedia_commons, image)
     return wikimedia_commons_not_file, image_wikimedia_commons_file or wikimedia_commons_file, image_https
 end
 
-function signal_caption(tags)
-  return tags['railway:signal:crossing_info:caption']
-    or tags['railway:signal:stop:caption']
-    or tags['railway:signal:crossing_hint:caption']
-    or tags['railway:signal:station_distant:caption']
-    or tags['railway:signal:crossing_distant:caption']
-    or tags['railway:signal:speed_limit:caption']
-    or tags['railway:signal:crossing:caption']
-    or tags['railway:signal:passing:caption']
-    or tags['railway:signal:automatic_marker:caption']
-    or tags['railway:signal:whistle:caption']
-    or tags['railway:signal:caption']
-    or tags['railway:signal:minor:caption']
-    or tags['railway:signal:main:caption']
-    or tags['railway:signal:main_repeated:caption']
-    or tags['railway:signal:distant:caption']
-    or tags['railway:signal:electricity:caption']
-    or tags['railway:signal:shunting:caption']
-    or tags['railway:signal:fouling_point:caption']
-    or tags['railway:signal:workrules:caption']
-    or tags['railway:signal:resetting_switch:caption']
-    or tags['railway:signal:switch:caption']
-    or tags['railway:signal:route:caption']
-    or tags['railway:signal:dual_mode:caption']
-    or tags['railway:signal:train_protection:caption']
-    or tags['railway:signal:train_protection:main:caption']
-    or tags['railway:signal:train_protection:system_change:caption']
-    or tags['railway:signal:slope:caption']
-    or tags['railway:signal:radio:frequency']
-end
-
 -- Table definitions --
 
 -- Note on primary keys:
@@ -394,7 +363,6 @@ local signal_columns = {
   { column = 'railway', type = 'text' },
   { column = 'ref', type = 'text' },
   { column = 'signal_direction', type = 'text' },
-  { column = 'caption', type = 'text' },
   { column = 'position', sql_type = 'text[]' },
   { column = 'wikidata', type = 'text' },
   { column = 'wikimedia_commons', type = 'text' },
@@ -439,6 +407,7 @@ local boxes = osm2pgsql.define_table({
     { column = 'ref', type = 'text' },
     { column = 'name', type = 'text' },
     { column = 'operator', type = 'text' },
+    { column = 'owner', type = 'text' },
     { column = 'position', sql_type = 'text[]' },
     { column = 'wikidata', type = 'text' },
     { column = 'wikimedia_commons', type = 'text' },
@@ -504,6 +473,7 @@ local catenary = osm2pgsql.define_table({
     { column = 'insulator', type = 'text' },
     { column = 'position', sql_type = 'text[]' },
     { column = 'operator', type = 'text' },
+    { column = 'owner', type = 'text' },
     { column = 'note', type = 'text' },
     { column = 'description', type = 'text' },
   },
@@ -651,6 +621,7 @@ local substation = osm2pgsql.define_table({
     { column = 'name', type = 'text' },
     { column = 'location', type = 'text' },
     { column = 'operator', type = 'text' },
+    { column = 'owner', type = 'text' },
     { column = 'voltage', sql_type = 'integer[]' },
     { column = 'frequency', sql_type = 'real[]' },
     { column = 'conversion', type = 'text' },
@@ -1245,6 +1216,7 @@ function osm2pgsql.process_node(object)
       ref = tags['railway:ref'],
       name = tags.name,
       operator = tags.operator,
+      owner = tags.owner,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       wikimedia_commons = wikimedia_commons,
       wikimedia_commons_file = wikimedia_commons_file,
@@ -1372,7 +1344,6 @@ function osm2pgsql.process_node(object)
       railway = tags.railway,
       ref = tags.ref,
       signal_direction = tags['railway:signal:direction'],
-      caption = signal_caption(tags),
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
@@ -1465,6 +1436,7 @@ function osm2pgsql.process_node(object)
       insulator = tags.insulator,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       operator = tags.operator,
+      owner = tags.owner,
       note = tags.note,
       description = tags.description,
     })
@@ -1627,6 +1599,7 @@ function osm2pgsql.process_way(object)
       ref = tags['railway:ref'],
       name = tags.name,
       operator = tags.operator,
+      owner = tags.owner,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       wikidata = tags.wikidata,
       wikimedia_commons = wikimedia_commons,
@@ -1686,6 +1659,7 @@ function osm2pgsql.process_way(object)
       insulator = tags.insulator,
       position = to_sql_array(map(parse_railway_positions(position, position_exact, line_positions), format_railway_position)),
       operator = tags.operator,
+      owner = tags.owner,
       note = tags.note,
       description = tags.description,
     })
@@ -1717,6 +1691,7 @@ function osm2pgsql.process_way(object)
       ref = tags.ref,
       location = tags.location,
       operator = tags.operator,
+      owner = tags.owner,
       voltage = to_sql_array(voltages),
       frequency = to_sql_array(frequencies),
       conversion = conversion,

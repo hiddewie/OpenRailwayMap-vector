@@ -1,4 +1,4 @@
-FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS build-lua
+FROM node:24-alpine@sha256:a34ab6d7f6f4813f4d0c5469d74685604b962fbdbf5793a7bc7b4998ecb867c8 AS build-lua
 
 WORKDIR /build
 
@@ -13,7 +13,7 @@ RUN --mount=type=bind,source=import/tags.lua.mjs,target=tags.lua.mjs \
   node tags.lua.mjs \
     > /build/tags.lua
 
-FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS build-signals
+FROM node:24-alpine@sha256:a34ab6d7f6f4813f4d0c5469d74685604b962fbdbf5793a7bc7b4998ecb867c8 AS build-signals
 
 WORKDIR /build
 
@@ -25,7 +25,7 @@ RUN --mount=type=bind,source=import/sql/signal_features.sql.mjs,target=signal_fe
   node signal_features.sql.mjs \
     > /build/signal_features.sql
 
-FROM node:24-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f AS build-operators
+FROM node:24-alpine@sha256:a34ab6d7f6f4813f4d0c5469d74685604b962fbdbf5793a7bc7b4998ecb867c8 AS build-operators
 
 WORKDIR /build
 
