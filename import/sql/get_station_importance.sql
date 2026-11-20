@@ -164,7 +164,8 @@ CREATE TABLE IF NOT EXISTS stations_with_importance (
   id SERIAL NOT NULL PRIMARY KEY,
   station_id TEXT NOT NULL,
   way GEOMETRY NOT NULL,
-  importance NUMERIC NOT NULL DEFAULT 0,
+  importance NUMERIC NOT NULL DEFAULT 0, -- importance used for map view
+  di_importance NUMERIC NOT NULL DEFAULT 0, -- importance used for discrete isolation algorithm
   discr_iso REAL NOT NULL DEFAULT 0.0, -- Column name is fixed
   irank BIGINT NOT NULL DEFAULT 0, -- Column name is fixed
   dirank BIGINT NOT NULL DEFAULT 0 -- Column name is fixed
