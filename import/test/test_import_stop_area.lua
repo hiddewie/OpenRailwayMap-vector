@@ -53,9 +53,9 @@ assert.eq(osm2pgsql.get_and_clear_imported_data(), {
     { way_ref_ids = '{6}', node_ref_ids = '{5}' },
   },
   stop_area_platforms = {
-    { platform_id = 2 },
-    { platform_id = 3 },
-    { platform_id = 4 },
+    { platform_id = 'node-2' },
+    { platform_id = 'way-3' },
+    { platform_id = 'relation-4' },
   },
   stop_area_route_stops = {
     { route_stop_id = 1 },

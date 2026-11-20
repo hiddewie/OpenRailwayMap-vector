@@ -552,7 +552,7 @@ local route_platform = osm2pgsql.define_table({
   name = 'route_platform',
   ids = { type = 'relation', id_column = 'route_id' },
   columns = {
-    { column = 'platform_id', sql_type = 'text', not_null = true },
+    { column = 'platform_id', type = 'text', not_null = true },
     { column = 'role', sql_type = 'route_platform_type', not_null = true },
   },
   indexes = {
@@ -587,7 +587,7 @@ local stop_area_platforms = osm2pgsql.define_table({
   name = 'stop_area_platforms',
   ids = { type = 'relation', id_column = 'stop_area_id' },
   columns = {
-    { column = 'platform_id', sql_type = 'int8' },
+    { column = 'platform_id', type = 'text', not_null = true },
   },
   indexes = {
     { column = 'stop_area_id', method = 'btree' },
@@ -1799,8 +1799,7 @@ function osm2pgsql.process_relation(object)
         has_members = true
       elseif member.role == 'platform' then
         stop_area_platforms:insert({
-          -- TODO include type, full platform ID
-          platform_id = member.ref,
+          platform_id = string.format("%s-%d", object_types_by_member_type[member.type], member.ref),
         })
         has_members = true
       elseif member.type == 'n' then

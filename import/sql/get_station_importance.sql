@@ -105,7 +105,7 @@ CREATE OR REPLACE VIEW station_nodes_platforms_rel_count AS
     JOIN stop_area_platforms sap
       ON sap.stop_area_id = sa.osm_id
     JOIN platforms p
-      ON sap.platform_id = p.osm_id
+      ON sap.platform_id = p.id
     JOIN route_platform rp
       ON rp.platform_id = p.id
   ) sr
