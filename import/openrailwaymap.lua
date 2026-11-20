@@ -963,17 +963,19 @@ end
 
 function station_references(tags)
   local found_references = {}
+  local has_references = false
 
   for _, reference in ipairs(tag_functions.station_references) do
     for _, tag in ipairs(reference.tags) do
       if tags[tag] then
         found_references[reference.id] = tags[tag]
+        has_references = true
         break
       end
     end
   end
 
-  return found_references
+  return has_references and found_references or nil
 end
 
 function position_is_zero(position)
