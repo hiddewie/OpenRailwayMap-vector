@@ -874,7 +874,7 @@ CREATE OR REPLACE VIEW standard_railway_platforms_view AS
     wheelchair,
     departures_board,
     tactile_paving,
-    (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]]) order by r.osm_id) from routes r where r.platform_ref_ids @> Array[p.osm_id]) as platform_routes
+    (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]]) order by r.osm_id) from routes r join route_platform rp on rp.route_id = r.osm_id where rp.platform_id = p.id) as platform_routes
   FROM platforms p;
 
 CREATE OR REPLACE FUNCTION standard_railway_platforms(z integer, x integer, y integer)
