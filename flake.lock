@@ -1,0 +1,40 @@
+{
+  "nodes": {
+    "berlin": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-+uZBLGzmL5TM03m59nAobJxkQICE6sUHJSBp54NJtQM=",
+        "type": "file",
+        "url": "https://download.geofabrik.de/europe/germany/berlin/berlin-261120.osm.pbf"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://download.geofabrik.de/europe/germany/berlin/berlin-261120.osm.pbf"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1795095985,
+        "narHash": "sha256-DOTZsOOoEtOY0ysY9L6JzyDHZm4lGBr6P1bt1mFXcRw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "19cfded70b91ca0981373973c5b1efffdd4d6647",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "berlin": "berlin",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
