@@ -1881,7 +1881,7 @@ DO $do$ BEGIN
   {
     "vector_layers": [
       {
-        "id": "route_railway_line_low",
+        "id": "railway_diagnostics",
         "fields": {
           "id": "number",
           "diagnostic": "string"
