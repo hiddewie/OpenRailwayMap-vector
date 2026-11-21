@@ -1136,6 +1136,9 @@ function is_railway_platform(tags)
         or tags.tram == 'yes'
         or tags.subway == 'yes'
         or tags.light_rail == 'yes'
+        or tags.monorail == 'yes'
+        or tags.funicular == 'yes'
+        or tags.miniature == 'yes'
         or not (
           tags.bus == 'yes'
           or tags.trolleybus == 'yes'
