@@ -1852,6 +1852,8 @@ CREATE OR REPLACE VIEW diagnostics_view AS
   SELECT
     id,
     way,
+    signal_id as osm_id,
+    'N' as osm_type,
     diagnostic,
     parameters
   FROM diagnostics_collected d;
