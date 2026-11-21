@@ -1962,6 +1962,6 @@ function osm2pgsql.process_gen()
     dest_table = 'stations_with_importance',
     geom_column = 'way',
     id_column = 'id',
-    importance_column = 'importance',
+    importance_column = 'di_importance',
   })
 end
