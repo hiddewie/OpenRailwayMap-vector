@@ -3633,6 +3633,21 @@ const sourceLayers = {
       ],
     },
   },
+
+  // Diagnostics
+
+  "openrailwaymap_diagnostics-railway_diagnostics": {
+    diagnostic: {
+      key: [],
+      features: ['error'].map(severity => ({
+        legend: `Diagnostic (${severity})`,
+        type: 'point',
+        properties: {
+          severity,
+        },
+      })),
+    },
+  },
 }
 
 // Generate legend keys
