@@ -124,6 +124,10 @@ function create_update_functions_views() {
   $PSQL -f sql/tile_views.sql
   echo " - API facility views - "
   $PSQL -f sql/api_facility_views.sql
+
+  # Diagnostics
+  echo " - Diagnostics - "
+  $PSQL -f sql/diagnostics.sql
 }
 
 function refresh_materialized_views() {
@@ -145,6 +149,8 @@ function refresh_materialized_views() {
   $PSQL -f sql/update_railway_line.sql
   echo " - API facility views - "
   $PSQL -f sql/update_api_views.sql
+  echo " - Diagnostics views - "
+  $PSQL -f sql/update_diagnostics.sql
 }
 
 function print_summary() {
