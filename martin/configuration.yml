@@ -195,3 +195,10 @@ postgres:
       schema: public
       function: route_railway_line_low
       maxzoom: 7
+
+    # --- Route --- #
+
+    railway_diagnostics:
+      schema: public
+      function: railway_diagnostics
+      maxzoom: 13

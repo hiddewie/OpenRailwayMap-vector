@@ -1,5 +1,7 @@
-CREATE OR REPLACE VIEW diagnostics_view AS
+CREATE OR REPLACE VIEW diagnostics_collected_view AS
   SELECT
+    row_number() over () as id,
+    way,
     feature,
     signal_id,
     'unknown_signal' AS diagnostic,
@@ -7,12 +9,15 @@ CREATE OR REPLACE VIEW diagnostics_view AS
   FROM (
     SELECT
       signal_id,
-      unnest(features) AS feature
-    FROM signal_features
+      unnest(features) AS feature,
+      way
+    FROM signal_features sf
+    JOIN signals s
+      ON s.osm_id = sf.signal_id
    ) split_features
   WHERE feature LIKE 'general/signal-unknown%';
 
-CREATE MATERIALIZED VIEW IF NOT EXISTS diagnostics AS
+CREATE MATERIALIZED VIEW IF NOT EXISTS diagnostics_collected AS
   SELECT
     *
-  FROM diagnostics_view;
+  FROM diagnostics_collected_view;

@@ -118,16 +118,14 @@ function create_update_functions_views() {
   $PSQL -f sql/stations_clustered.sql
   echo " - Grouped railway lines - "
   $PSQL -f sql/railway_line.sql
+  echo " - Diagnostics - "
+  $PSQL -f sql/diagnostics.sql
 
   # Tile and API views on processed data
   echo " - Tile views - "
   $PSQL -f sql/tile_views.sql
   echo " - API facility views - "
   $PSQL -f sql/api_facility_views.sql
-
-  # Diagnostics
-  echo " - Diagnostics - "
-  $PSQL -f sql/diagnostics.sql
 }
 
 function refresh_materialized_views() {
