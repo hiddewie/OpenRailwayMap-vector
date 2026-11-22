@@ -372,7 +372,8 @@ CREATE OR REPLACE VIEW signal_features_view AS
       END as type,
       deactivated,
       MIN(rank) as rank,
-      (array_agg(category ORDER BY rank))[1] as category
+      (array_agg(category ORDER BY rank))[1] as category,
+      (array_agg(caption ORDER BY rank))[1] as caption
     FROM signals_with_features_2
     GROUP BY signal_id, inline, deactivated, row_index
   )
