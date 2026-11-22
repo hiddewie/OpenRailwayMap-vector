@@ -1,6 +1,0 @@
-**
-!*.yaml
-!schema/*.yaml
-!test/test.js
-!test/package.json
-!test/package-lock.json

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="532" height="321" viewBox="0 0 532 321" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#000">
+  <style>
+    .box { fill: #fff; stroke: #000; }
+    .label { text-anchor: middle; }
+    .arrow { fill: none; stroke: #000; stroke-width: 1.5; marker-end: url(#head); }
+  </style>
+  <defs>
+    <marker id="head" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#000"/>
+    </marker>
+    <!-- cylinder: database / cache -->
+    <symbol id="db" viewBox="0 0 60 80">
+      <path class="box" d="M0,10 v60 a30,10 0 0 0 60,0 v-60"/>
+      <ellipse class="box" cx="30" cy="10" rx="30" ry="10"/>
+    </symbol>
+  </defs>
+
+  <!-- User -->
+  <g transform="translate(15,65)">
+    <circle class="box" cx="0" cy="0" r="8"/>
+    <path d="M0,8 v18 M-12,12 h24 M0,26 l-10,18 M0,26 l10,18" fill="none" stroke="#000"/>
+    <text class="label" x="0" y="66">User</text>
+  </g>
+  <path class="box" d="M33,90 h20 v-8 l16,13 l-16,13 v-8 h-20 z"/>
+
+  <!-- CDN -->
+  <rect class="box" x="70" y="0" width="70" height="320"/>
+  <line x1="94" y1="0" x2="94" y2="320" stroke="#000"/>
+  <text class="label" transform="translate(84,155) rotate(-90)" font-weight="bold">CDN (Cloudflare)</text>
+  <use href="#db" x="80" y="230" width="50" height="80"/>
+  <text class="label" x="105" y="285">Cache</text>
+
+  <!-- CDN -> server -->
+  <path class="arrow" d="M140,100 h70"/>
+  <text x="158" y="96">SSL</text>
+
+  <!-- Server -->
+  <rect class="box" x="210" y="0" width="321" height="320"/>
+  <text x="215" y="18">Server</text>
+  <rect class="box" x="240" y="40" width="270" height="270"/>
+  <text x="245" y="58">NixOS (systemd)</text>
+
+  <!-- nginx -->
+  <path class="arrow" d="M210,100 L262,170"/>
+  <rect class="box" x="260" y="110" width="90" height="150"/>
+  <line x1="282" y1="110" x2="282" y2="260" stroke="#000"/>
+  <text class="label" transform="translate(275,185) rotate(-90)" font-weight="bold">nginx</text>
+  <use href="#db" x="292" y="180" width="50" height="70"/>
+  <text class="label" x="317" y="228">Assets</text>
+
+  <!-- API and Martin -->
+  <path class="arrow" d="M350,155 L372,148"/>
+  <path class="box" d="M410,110 l40,40 l-40,40 l-40,-40 z"/>
+  <text class="label" x="410" y="154">API</text>
+
+  <path class="arrow" d="M350,200 L372,230"/>
+  <path class="box" d="M410,200 l40,40 l-40,40 l-40,-40 z"/>
+  <text class="label" x="410" y="244">Martin</text>
+
+  <!-- database -->
+  <path class="arrow" d="M450,150 L474,165"/>
+  <path class="arrow" d="M450,240 L474,225"/>
+  <use href="#db" x="465" y="150" width="55" height="85"/>
+  <text class="label" x="492" y="205">PostGIS</text>
+</svg>

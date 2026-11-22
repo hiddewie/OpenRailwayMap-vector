@@ -1,4 +1,5 @@
 import hashlib
+import os
 from html.parser import HTMLParser
 from io import StringIO
 from urllib.parse import quote
@@ -10,6 +11,8 @@ from fastapi.responses import RedirectResponse
 class WikidataAPI:
     def __init__(self, http_client):
         self.http_client = http_client
+        # Where the Wikidata/Commons requests go; overridable so tests can serve recorded responses.
+        self.base_url = os.environ.get('WIKIDATA_BASE_URL', 'https://www.wikidata.org')
 
     async def wikidata_image(self, *, id):
         file_name, error = await self.wikidata_image_file(id)
@@ -51,7 +54,7 @@ class WikidataAPI:
         }
 
     async def wikidata_image_file(self, id):
-        url = f"https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/{id}/statements"
+        url = f"{self.base_url}/w/rest.php/wikibase/v1/entities/items/{id}/statements"
         params = {
             'property': 'P18',
         }
@@ -86,7 +89,7 @@ class WikidataAPI:
         return best_statement['value']['content'], None
 
     async def wikimedia_file_metadata(self, file_name):
-        url = "https://www.wikidata.org/w/api.php"
+        url = f"{self.base_url}/w/api.php"
         params = {
             'action': 'query',
             'prop': 'imageinfo',

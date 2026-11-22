@@ -20,3 +20,5 @@ node_modules
 taginfo.json
 .DS_Store
 /.vs
+result
+result-*
