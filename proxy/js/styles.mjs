@@ -717,6 +717,11 @@ const sources = {
     url: '/points_of_interest,points_of_interest_areas,level_crossings_grouped,level_crossings_grouped_buffered',
     promoteId: 'id',
   },
+  openrailwaymap_diagnostics: {
+    type: 'vector',
+    url: '/railway_diagnostics',
+    promoteId: 'id',
+  },
   openhistoricalmap: {
     type: 'vector',
     tiles: ['https://vtiles.openhistoricalmap.org/maps/osm/{z}/{x}/{y}.pbf'],
@@ -3777,6 +3782,35 @@ const layers = [
       ],
     },
   },
+
+  // Diagnostics
+
+  {
+    id: 'diagnostics',
+    type: 'circle',
+    minzoom: 13,
+    source: 'openrailwaymap_diagnostics',
+    'source-layer': 'railway_diagnostics',
+    paint: {
+      'circle-radius': 16,
+      'circle-color': 'transparent',
+      'circle-opacity': 0.8,
+      'circle-stroke-width': 3,
+      'circle-stroke-color': 'red',
+      'circle-blur': 0.25,
+    },
+    layout: {
+      // 'visibility': ['case',
+      //   ['<', ['global-state', 'date'], defaultDate], 'none',
+      //   ['in', ['global-state', 'stations'], ['literal', ['station', 'operator', 'owner']]], 'visible',
+      //   'none',
+      // ],
+      // 'symbol-z-order': 'source',
+      // 'icon-image': 'sdf:general/station-small',
+      // 'icon-overlap': 'always',
+    },
+  },
+
 
   // Stations
 

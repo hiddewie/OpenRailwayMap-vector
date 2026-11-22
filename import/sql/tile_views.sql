@@ -1845,3 +1845,51 @@ DO $do$ BEGIN
   }
   $$::json || '$tj$';
 END $do$;
+
+--- Diagnostics ---
+
+CREATE OR REPLACE VIEW diagnostics_view AS
+  SELECT
+    id,
+    way,
+    signal_id as osm_id,
+    'N' as osm_type,
+    diagnostic,
+    parameters
+  FROM diagnostics_collected d;
+
+CREATE OR REPLACE FUNCTION railway_diagnostics(z integer, x integer, y integer)
+  RETURNS bytea
+  LANGUAGE SQL
+  IMMUTABLE
+  STRICT
+  PARALLEL SAFE
+RETURN (
+  SELECT
+    ST_AsMVT(tile, 'railway_diagnostics', 4096, 'way')
+  FROM (
+    SELECT
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), 4096, 64, true) as way,
+      diagnostic
+    FROM diagnostics_view
+    WHERE way && ST_TileEnvelope(z, x, y)
+  ) as tile
+  WHERE way IS NOT NULL
+);
+
+DO $do$ BEGIN
+  EXECUTE 'COMMENT ON FUNCTION railway_diagnostics IS $tj$' || $$
+  {
+    "vector_layers": [
+      {
+        "id": "railway_diagnostics",
+        "fields": {
+          "id": "number",
+          "diagnostic": "string"
+        }
+      }
+    ]
+  }
+  $$::json || '$tj$';
+END $do$;

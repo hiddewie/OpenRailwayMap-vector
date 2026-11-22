@@ -1448,6 +1448,21 @@ const features = {
       },
     },
   },
+  'openrailwaymap_diagnostics-railway_diagnostics': {
+    view: {
+      name: 'diagnostics_view',
+      id_type: 'numeric',
+    },
+    featureProperty: 'diagnostic', // TODO
+    featureLinks: featureLinks.openstreetmap,
+    // labelProperties: [], // TODO
+    features: {
+      unknown_signal: {
+        name: 'Unknown signal',
+      },
+    },
+    properties: {},
+  },
 
   // Search results
 
