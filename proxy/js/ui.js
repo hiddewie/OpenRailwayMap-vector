@@ -1,6 +1,3 @@
-// Add support for right-to-left languages like Arabic and Hebrew
-maplibregl.setRTLTextPlugin(`${location.origin}/js/mapbox-gl/mapbox-gl-rtl-text.js`, null, true);
-
 const searchBackdrop = document.getElementById('search-backdrop');
 const searchFacilitiesTab = document.getElementById('search-facilities-tab');
 const searchMilestonesTab = document.getElementById('search-milestones-tab');
@@ -410,9 +407,9 @@ function hideNews() {
 function newsLink(presetOrStyle, zoom, lat, lon, date, bearing, pitch) {
   hideNews();
   if (typeof presetOrStyle === 'string') {
-    selectPreset(preset);
+    selectPreset(presetOrStyle);
   } else if (typeof presetOrStyle === 'object') {
-    selectedStyle(presetOrStyle)
+    selectStyle(presetOrStyle)
   }
   selectDate(date ?? defaultDate);
   map.jumpTo({zoom, center: {lat, lon}, bearing: bearing ?? 0, pitch: pitch ?? 0});
@@ -579,7 +576,7 @@ const knownStyles = {
       platforms: 'none',
       substations: 'none',
       boxes: 'operator',
-      catenaries: 'none',
+      catenaries: 'operator',
       switches: 'none',
       signals: [],
     },
@@ -642,8 +639,20 @@ const styleElements = [
         value: 'track_class',
       },
       {
+        name: 'Axle load',
+        value: 'axle_load',
+      },
+      {
+        name: 'Metre load',
+        value: 'metre_load',
+      },
+      {
         name: 'Operator',
         value: 'operator',
+      },
+      {
+        name: 'Owner',
+        value: 'owner',
       },
       {
         name: 'Routes',
@@ -656,6 +665,10 @@ const styleElements = [
       {
         name: 'Radio',
         value: 'radio',
+      },
+      {
+        name: 'Plain',
+        value: 'plain',
       },
     ],
   },
@@ -674,6 +687,10 @@ const styleElements = [
         value: 'operator',
       },
       {
+        name: 'Owner',
+        value: 'owner',
+      },
+      {
         name: 'None',
         value: 'none',
       },
@@ -688,6 +705,10 @@ const styleElements = [
       {
         name: 'Plain',
         value: 'plain',
+      },
+      {
+        name: 'Height',
+        value: 'height',
       },
       {
         name: 'None',
@@ -810,6 +831,10 @@ const styleElements = [
         value: 'operator',
       },
       {
+        name: 'Owner',
+        value: 'owner',
+      },
+      {
         name: 'None',
         value: 'none',
       },
@@ -824,6 +849,14 @@ const styleElements = [
       {
         name: 'Plain',
         value: 'plain',
+      },
+      {
+        name: 'Operator',
+        value: 'operator',
+      },
+      {
+        name: 'Owner',
+        value: 'owner',
       },
       {
         name: 'None',
@@ -844,6 +877,10 @@ const styleElements = [
       {
         name: 'Operator',
         value: 'operator',
+      },
+      {
+        name: 'Owner',
+        value: 'owner',
       },
       {
         name: 'None',
@@ -1359,7 +1396,7 @@ function layoutImages(images, gap) {
         break;
 
       case 'left':
-        image.offset.x = globalOffset.x - image.image.data.width / 2
+        image.offset.x = globalOffset.x - image.image.data.width
         image.offset.y = globalOffset.y + height / 2 - image.image.data.height / 2
         globalOffset.x = Math.min(globalOffset.x, image.offset.x)
         globalOffset.y = Math.min(globalOffset.y, image.offset.y)
@@ -1532,13 +1569,10 @@ const map = new maplibregl.Map({
   maxZoom: globalMaxZoom,
   attributionControl: false,
   renderWorldCopies: false,
-  ...(configuration.view || defaultConfiguration.view),
-});
-map.setStyle(`${location.origin}/style.json`, {
-  validate: false,
+  style: `${location.origin}/style.json`,
+  validateStyle: false,
   transformStyle: (previous, next) => {
     const language = configuredLanguage();
-
     rewriteStylePathsToOrigin(next)
     addLanguageToSupportedSources(next, language)
     return next;
@@ -1547,8 +1581,8 @@ map.setStyle(`${location.origin}/style.json`, {
     date: selectedDate === 'all' ? defaultDate : selectedDate,
     allDates: selectedDate === 'all',
     theme: selectedTheme,
-    bearing: map.getBearing() ?? 0,
-    pitched: pitchedView(map.getPitch() ?? 0),
+    bearing: (configuration.view || defaultConfiguration.view)?.bearing ?? 0,
+    pitched: pitchedView((configuration.view || defaultConfiguration.view)?.pitch ?? 0),
     stationLowZoomLabel: configuration.stationLowZoomLabel ?? defaultConfiguration.stationLowZoomLabel,
     openHistoricalMap: (configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure) === 'openhistoricalmap',
     showAbandonedInfrastructure: (configuration.historicalInfrastructure ?? defaultConfiguration.historicalInfrastructure) === 'openstreetmap',
@@ -1558,10 +1592,16 @@ map.setStyle(`${location.origin}/style.json`, {
     hillshade: configuration.backgroundHillShade ?? defaultConfiguration.backgroundHillShade,
     ...selectedStyle,
   },
+  ...(configuration.view || defaultConfiguration.view),
 });
 
 function selectPreset(preset) {
   styleControl.selectPreset(preset);
+  onStyleChange();
+}
+
+function selectStyle(style) {
+  styleControl.selectStyleOptions(style);
   onStyleChange();
 }
 
@@ -1595,9 +1635,17 @@ function rewriteStylePathsToOrigin(style) {
       ])
   )
 
-  style.glyphs = style.glyphs && style.glyphs.startsWith('/')
-    ? `${location.origin}${style.glyphs}`
-    : style.glyphs
+  style['font-faces'] = style['font-faces'] && Object.fromEntries(
+    Object.entries(style['font-faces'])
+      .map(([key, fontFaces]) => [
+        key,
+        fontFaces.map(fontFace =>
+          fontFace && fontFace.url && fontFace.url.startsWith('/')
+            ? ({...fontFace, url: `${location.origin}${fontFace.url}`})
+            : fontFace
+        )
+      ])
+  )
 
   style.sprite = style.sprite
     .map(sprite =>

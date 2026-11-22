@@ -23,6 +23,9 @@ postgres:
 
   reload_interval: ${POSTGRES_RELOAD_INTERVAL:-0s}
 
+  # Convert tiles to MapLibre Tiles (MLT) when the client requests such tiles
+  convert_to_mlt: auto
+
   # No tables, see function sources below
   tables: {}
 
@@ -138,11 +141,6 @@ postgres:
       maxzoom: 7
 
     # --- Signals --- #
-
-    signals_railway_line_low_construction:
-      schema: public
-      function: signals_railway_line_low_construction
-      maxzoom: 7
 
     signals_railway_line_low:
       schema: public

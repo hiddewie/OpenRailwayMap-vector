@@ -56,7 +56,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS stations_clustered AS
         join stop_area_platforms sap
           on sap.stop_area_id = sa.osm_id
         join platforms pl
-          on pl.osm_id = sap.platform_id
+          on pl.id = sap.platform_id
       ) q on q.stop_area_id = sa.osm_id
       group by name, station, map_reference, uic_ref, feature, state, id
     ) stations_with_entrances

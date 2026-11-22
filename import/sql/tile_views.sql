@@ -1,140 +1,5 @@
 --- Shared ---
 
-CREATE OR REPLACE VIEW railway_line_view AS
-  SELECT
-    r.id,
-    osm_id,
-    'W' as osm_type,
-    way,
-    way_length,
-    layer,
-    feature,
-    state,
-    usage,
-    service,
-    highspeed,
-    preserved,
-    tunnel,
-    bridge,
-    r.name as name,
-    ref,
-    track_ref,
-    track_class,
-    reporting_marks,
-    preferred_direction,
-    rank,
-    maxspeed,
-    speed_label,
-    train_protection_rank,
-    train_protection,
-    train_protection_construction_rank,
-    train_protection_construction,
-    electrification_state,
-    voltage,
-    frequency,
-    maximum_current,
-    future_voltage,
-    future_frequency,
-    future_maximum_current,
-    gauges,
-    railway_to_int(gauge0) AS gaugeint0,
-    gauge0,
-    railway_to_int(gauge1) AS gaugeint1,
-    gauge1,
-    railway_to_int(gauge2) AS gaugeint2,
-    gauge2,
-    loading_gauge,
-    operator,
-    COALESCE(
-      ro.color,
-      'hsl(' || get_byte(sha256(primary_operator::bytea), 0) || ', 100%, 30%)'
-    ) as operator_color,
-    coalesce(ro.bright, get_byte(sha256(primary_operator::bytea), 0) between 44 AND 189) as operator_bright,
-    primary_operator,
-    owner,
-    traffic_mode,
-    radio,
-    rubber_tires,
-    workrules,
-    passenger_lines,
-    rack,
-    line_routes,
-    route_count,
-    wikidata,
-    wikimedia_commons,
-    wikimedia_commons_file,
-    image,
-    mapillary,
-    wikipedia,
-    note,
-    description
-  FROM (
-    SELECT
-      id,
-      osm_id,
-      way,
-      way_length,
-      feature,
-      state,
-      usage,
-      service,
-      rank,
-      highspeed,
-      preserved,
-      reporting_marks,
-      layer,
-      bridge,
-      tunnel,
-      track_ref,
-      track_class,
-      ref,
-      name,
-      preferred_direction,
-      maxspeed,
-      speed_label,
-      train_protection_rank,
-      train_protection,
-      train_protection_construction_rank,
-      train_protection_construction,
-      electrification_state,
-      voltage,
-      frequency,
-      maximum_current,
-      future_voltage,
-      future_frequency,
-      future_maximum_current,
-      gauges,
-      gauges[1] AS gauge0,
-      gauges[2] AS gauge1,
-      gauges[3] AS gauge2,
-      loading_gauge,
-      operator,
-      owner,
-      CASE
-        WHEN ARRAY[owner] <@ operator THEN owner
-        ELSE operator[1]
-      END AS primary_operator,
-      traffic_mode,
-      radio,
-      rubber_tires,
-      workrules,
-      passenger_lines,
-      rack,
-      (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]]) order by r.osm_id) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as line_routes,
-      (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
-      wikidata,
-      wikimedia_commons,
-      wikimedia_commons_file,
-      image,
-      mapillary,
-      wikipedia,
-      note,
-      description
-    FROM railway_line l
-  ) AS r
-  LEFT JOIN railway_operator ro
-    ON ro.name = primary_operator;
-
 CREATE OR REPLACE FUNCTION railway_line_high(z integer, x integer, y integer)
   RETURNS bytea
   LANGUAGE SQL
@@ -161,6 +26,8 @@ RETURN (
       ref,
       track_ref,
       track_class,
+      axle_load,
+      metre_load,
       preferred_direction,
       rank,
       maxspeed,
@@ -191,6 +58,8 @@ RETURN (
       operator_bright,
       primary_operator,
       owner,
+      owner_color,
+      owner_bright,
       route_count,
       passenger_lines,
       rack,
@@ -289,11 +158,15 @@ DO $do$ BEGIN
           "gauges": "string",
           "loading_gauge": "string",
           "track_class": "string",
+          "axle_load": "number",
+          "metre_load": "number",
           "operator": "string",
           "operator_color": "string",
           "operator_bright": "string",
           "primary_operator": "string",
           "owner": "string",
+          "owner_color": "string",
+          "owner_bright": "string",
           "route_count": "integer",
           "passenger_lines": "integer",
           "rack": "string",
@@ -332,6 +205,8 @@ CREATE OR REPLACE VIEW railway_line_low AS
     gauge0,
     loading_gauge,
     track_class,
+    axle_load,
+    metre_load,
     operator,
     operator_color,
     operator_bright,
@@ -360,30 +235,14 @@ RETURN (
     ST_AsMVT(tile, 'standard_railway_line_low', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), 4096, 64, true) as way,
       feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
-      highspeed,
-      ref,
-      name,
-      radio,
-      max(rank) as rank
-    FROM railway_line_low l
-    WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      feature,
-      ref,
-      name,
+      state,
       highspeed,
       radio
-    ORDER by
-      rank NULLS LAST
+    FROM railway_line_low_grouped l
+    WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -398,7 +257,6 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "usage": "string",
           "highspeed": "boolean",
           "radio": "string"
         }
@@ -450,13 +308,18 @@ CREATE OR REPLACE VIEW railway_text_stations AS
     discr_iso,
     count,
     gs.operator as operator,
-    owner,
+    gs.owner as owner,
     network,
     COALESCE(
       ro.color,
       'hsl(' || get_byte(sha256(gs.operator[1]::bytea), 0) || ', 100%, 30%)'
     ) as operator_color,
     coalesce(ro.bright, get_byte(sha256(gs.operator[1]::bytea), 0) between 44 AND 189) as operator_bright,
+    COALESCE(
+      ro2.color,
+      'hsl(' || get_byte(sha256(gs.owner[1]::bytea), 0) || ', 100%, 30%)'
+    ) as owner_color,
+    coalesce(ro.bright, get_byte(sha256(gs.owner[1]::bytea), 0) between 44 AND 189) as owner_bright,
     position,
     wikidata,
     wikimedia_commons,
@@ -472,6 +335,8 @@ CREATE OR REPLACE VIEW railway_text_stations AS
   FROM grouped_stations_with_importance gs
   LEFT JOIN railway_operator ro
     ON ro.name = operator[1]
+  LEFT JOIN railway_operator ro2
+    ON ro2.name = owner[1]
   ORDER BY
     rank DESC NULLS LAST,
     importance DESC NULLS LAST;
@@ -494,13 +359,15 @@ RETURN (
       COALESCE(localize(name_tags, 'name:', string_to_array(query->>'lang', ',')), name) AS localized_name,
       station_size,
       operator_color,
-      operator_bright
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM railway_text_stations
     WHERE buffered && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-      AND 213000 * exp(-0.33 * z) - 18000 < discr_iso
+      AND discr_iso > 213000 * exp(-0.33 * z) - 18000
       AND station_size IN ('large', 'normal')
     ORDER BY
       importance DESC NULLS LAST
@@ -521,7 +388,9 @@ DO $do$ BEGIN
           "localized_name": "string",
           "station_size": "string",
           "operator_color": "string",
-          "operator_bright": "string"
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -547,13 +416,15 @@ RETURN (
       COALESCE(localize(name_tags, 'name:', string_to_array(query->>'lang', ',')), name) AS localized_name,
       station_size,
       operator_color,
-      operator_bright
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM railway_text_stations
     WHERE buffered && ST_TileEnvelope(z, x, y)
       AND feature = 'station'
       AND state = 'present'
       AND (station IS NULL OR station NOT IN ('light_rail', 'monorail', 'subway'))
-      AND 213000 * exp(-0.33 * z) - 18000 < discr_iso
+      AND discr_iso > 213000 * exp(-0.33 * z) - 18000
       AND station_size IN ('large', 'normal')
     ORDER BY
       importance DESC NULLS LAST
@@ -574,7 +445,9 @@ DO $do$ BEGIN
           "localized_name": "string",
           "station_size": "string",
           "operator_color": "string",
-          "operator_bright": "string"
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -663,7 +536,9 @@ RETURN (
       COALESCE(localize(name_tags, 'name:', string_to_array(query->>'lang', ',')), name) AS localized_name,
       count,
       operator_color,
-      operator_bright
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM railway_text_stations
     WHERE buffered && ST_TileEnvelope(z, x, y)
       -- conditionally include features based on zoom level
@@ -707,6 +582,8 @@ DO $do$ BEGIN
           "localized_name": "string",
           "operator_color": "string",
           "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string",
           "count": "integer"
         }
       }
@@ -732,7 +609,9 @@ RETURN (
       state,
       station,
       operator_color,
-      operator_bright
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM railway_text_stations
     WHERE buffered && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -751,7 +630,9 @@ DO $do$ BEGIN
           "state": "string",
           "station": "string",
           "operator_color": "string",
-          "operator_bright": "string"
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -993,7 +874,7 @@ CREATE OR REPLACE VIEW standard_railway_platforms_view AS
     wheelchair,
     departures_board,
     tactile_paving,
-    (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]]) order by r.osm_id) from routes r where r.platform_ref_ids @> Array[p.osm_id]) as platform_routes
+    (select array_agg(hstore(ARRAY[ARRAY['route_id', r.osm_id::text], ARRAY['color', coalesce(r.color, '')], ARRAY['label', coalesce(r.name, '')]]) order by r.osm_id) from routes r join route_platform rp on rp.route_id = r.osm_id where rp.platform_id = p.id) as platform_routes
   FROM platforms p;
 
 CREATE OR REPLACE FUNCTION standard_railway_platforms(z integer, x integer, y integer)
@@ -1010,7 +891,8 @@ RETURN (
       id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       'platform' as feature,
-      name
+      name,
+      height
     FROM standard_railway_platforms_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -1025,7 +907,8 @@ DO $do$ BEGIN
         "id": "standard_railway_platforms",
         "fields": {
           "id": "string",
-          "name": "string"
+          "name": "string",
+          "height": "number"
         }
       }
     ]
@@ -1059,7 +942,8 @@ RETURN (
     SELECT
       id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      ref
+      ref,
+      height
     FROM standard_railway_platform_edges_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -1074,7 +958,8 @@ DO $do$ BEGIN
         "id": "standard_railway_platform_edges",
         "fields": {
           "id": "integer",
-          "ref": "string"
+          "ref": "string",
+          "height": "number"
         }
       }
     ]
@@ -1420,22 +1305,14 @@ RETURN (
     ST_AsMVT(tile, 'speed_railway_line_low', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
-      maxspeed,
-      speed_label,
-      max(rank) as rank
-    FROM railway_line_low
+      state,
+      maxspeed
+    FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      feature,
-      ref,
-      name,
-      maxspeed,
-      speed_label
+      AND feature != 'ferry'
     ORDER by
       rank NULLS LAST,
       maxspeed NULLS FIRST
@@ -1453,9 +1330,7 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "usage": "string",
-          "maxspeed": "number",
-          "speed_label": "string"
+          "maxspeed": "number"
         }
       }
     ]
@@ -1476,28 +1351,18 @@ RETURN (
     ST_AsMVT(tile, 'signals_railway_line_low', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
-      max(train_protection_rank) as train_protection_rank,
-      train_protection[1] as train_protection0,
-      train_protection[2] as train_protection1,
-      train_protection[3] as train_protection2,
-      max(train_protection_construction_rank) as train_protection_construction_rank,
-      train_protection_construction,
-      max(rank) as rank
-    FROM railway_line_low
-    WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      feature,
-      ref,
-      name,
-      train_protection,
+      state,
+      train_protection0,
       train_protection_construction
+    FROM railway_line_low_grouped
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND feature != 'ferry'
     ORDER by
-      rank NULLS LAST
+      train_protection_rank DESC,
+      train_protection_construction_rank DESC NULLS LAST
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -1512,59 +1377,7 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "usage": "string",
           "train_protection0": "string",
-          "train_protection1": "string",
-          "train_protection2": "string",
-          "train_protection_rank": "integer",
-          "train_protection_construction": "string",
-          "train_protection_construction_rank": "integer"
-        }
-      }
-    ]
-  }
-  $$::json || '$tj$';
-END $do$;
-
-CREATE OR REPLACE FUNCTION signals_railway_line_low_construction(z integer, x integer, y integer)
-  RETURNS bytea
-  LANGUAGE SQL
-  IMMUTABLE
-  STRICT
-  PARALLEL SAFE
-RETURN (
-  SELECT
-    ST_AsMVT(tile, 'signals_railway_line_low_construction', 4096, 'way')
-  FROM (
-    SELECT
-      min(id) as id,
-      ST_AsMVTGeom(st_linemerge(st_simplify(st_collect(way), 100000)), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      any_value(state) as state,
-      max(train_protection_construction_rank) as train_protection_construction_rank,
-      train_protection_construction
-    FROM railway_line_low
-    WHERE way && ST_TileEnvelope(z, x, y)
-      AND feature != 'ferry'
-      AND train_protection_construction IS NOT NULL
-    GROUP BY
-      ref,
-      name,
-      train_protection_construction
-    ORDER by
-      train_protection_construction_rank NULLS FIRST
-  ) as tile
-  WHERE way IS NOT NULL
-);
-
-DO $do$ BEGIN
-  EXECUTE 'COMMENT ON FUNCTION signals_railway_line_low_construction IS $tj$' || $$
-  {
-    "vector_layers": [
-      {
-        "id": "signals_railway_line_low_construction",
-        "fields": {
-          "id": "string",
-          "state": "string",
           "train_protection_construction": "string"
         }
       }
@@ -1591,6 +1404,12 @@ CREATE OR REPLACE VIEW signal_boxes_view AS
       'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)'
     ) as operator_color,
     coalesce(ro.bright, get_byte(sha256(operator::bytea), 0) between 44 AND 189) as operator_bright,
+    owner,
+    COALESCE(
+      ro2.color,
+      'hsl(' || get_byte(sha256(owner::bytea), 0) || ', 100%, 30%)'
+    ) as owner_color,
+    coalesce(ro.bright, get_byte(sha256(owner::bytea), 0) between 44 AND 189) as owner_bright,
     position,
     wikimedia_commons,
     wikimedia_commons_file,
@@ -1602,7 +1421,9 @@ CREATE OR REPLACE VIEW signal_boxes_view AS
     description
   FROM boxes b
   LEFT JOIN railway_operator ro
-    ON ro.name = operator;
+    ON ro.name = operator
+  LEFT JOIN railway_operator ro2
+    ON ro2.name = owner;
 
 CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
   RETURNS bytea
@@ -1628,7 +1449,9 @@ CREATE OR REPLACE FUNCTION signals_signal_boxes(z integer, x integer, y integer)
         ref,
         name,
         operator_color,
-        operator_bright
+        operator_bright,
+        owner_color,
+        owner_bright
       FROM signal_boxes_view b
       WHERE way && ST_TileEnvelope(z, x, y)
     ) as tile
@@ -1647,7 +1470,9 @@ DO $do$ BEGIN
           "ref": "string",
           "name": "string",
           "operator_color": "string",
-          "operator_bright": "string"
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -1668,28 +1493,20 @@ RETURN (
     ST_AsMVT(tile, 'electrification_railway_line_low', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
-      electrification_state,
-      voltage,
-      frequency,
-      maximum_current,
-      max(rank) as rank
-    FROM railway_line_low
-    WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      feature,
-      ref,
-      name,
+      state,
       electrification_state,
       voltage,
       frequency,
       maximum_current
+    FROM railway_line_low_grouped
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND feature != 'ferry'
     ORDER by
-      rank NULLS LAST
+      voltage NULLS FIRST,
+      frequency NULLS FIRST
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -1704,14 +1521,10 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "usage": "string",
           "electrification_state": "string",
           "frequency": "number",
           "voltage": "integer",
-          "maximum_current": "integer",
-          "future_frequency": "number",
-          "future_voltage": "integer",
-          "future_maximum_current": "integer"
+          "maximum_current": "integer"
         }
       }
     ]
@@ -1721,7 +1534,7 @@ END $do$;
 
 CREATE OR REPLACE VIEW electrification_catenary_view AS
   SELECT
-    id,
+    c.id,
     osm_id,
     osm_type,
     way,
@@ -1735,9 +1548,24 @@ CREATE OR REPLACE VIEW electrification_catenary_view AS
     insulator,
     position,
     operator,
+    COALESCE(
+      ro.color,
+      'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)'
+    ) as operator_color,
+    coalesce(ro.bright, get_byte(sha256(operator::bytea), 0) between 44 AND 189) as operator_bright,
+    owner,
+    COALESCE(
+      ro2.color,
+      'hsl(' || get_byte(sha256(owner::bytea), 0) || ', 100%, 30%)'
+    ) as owner_color,
+    coalesce(ro.bright, get_byte(sha256(owner::bytea), 0) between 44 AND 189) as owner_bright,
     note,
     description
-  FROM catenary;
+  FROM catenary c
+  LEFT JOIN railway_operator ro
+    ON ro.name = operator
+  LEFT JOIN railway_operator ro2
+    ON ro2.name = owner;
 
 CREATE OR REPLACE FUNCTION electrification_catenary(z integer, x integer, y integer)
   RETURNS bytea
@@ -1754,7 +1582,11 @@ RETURN (
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
       ref,
-      transition
+      transition,
+      operator_color,
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM electrification_catenary_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -1771,7 +1603,11 @@ DO $do$ BEGIN
           "id": "string",
           "ref": "string",
           "feature": "string",
-          "transition": "boolean"
+          "transition": "boolean",
+          "operator_color": "string",
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -1787,9 +1623,20 @@ CREATE OR REPLACE VIEW electrification_substation_view AS
     way,
     feature,
     ref,
-    name,
+    s.name,
     location,
     operator,
+    COALESCE(
+      ro.color,
+      'hsl(' || get_byte(sha256(operator::bytea), 0) || ', 100%, 30%)'
+    ) as operator_color,
+    coalesce(ro.bright, get_byte(sha256(operator::bytea), 0) between 44 AND 189) as operator_bright,
+    owner,
+    COALESCE(
+      ro2.color,
+      'hsl(' || get_byte(sha256(owner::bytea), 0) || ', 100%, 30%)'
+    ) as owner_color,
+    coalesce(ro.bright, get_byte(sha256(owner::bytea), 0) between 44 AND 189) as owner_bright,
     voltage,
     frequency,
     conversion,
@@ -1801,7 +1648,11 @@ CREATE OR REPLACE VIEW electrification_substation_view AS
     wikipedia,
     note,
     description
-  FROM substation;
+  FROM substation s
+  LEFT JOIN railway_operator ro
+    ON ro.name = operator
+  LEFT JOIN railway_operator ro2
+    ON ro2.name = owner;
 
 CREATE OR REPLACE FUNCTION electrification_substation(z integer, x integer, y integer)
   RETURNS bytea
@@ -1816,7 +1667,11 @@ RETURN (
     SELECT
       id,
       ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
-      name
+      name,
+      operator_color,
+      operator_bright,
+      owner_color,
+      owner_bright
     FROM electrification_substation_view
     WHERE way && ST_TileEnvelope(z, x, y)
   ) as tile
@@ -1831,7 +1686,11 @@ DO $do$ BEGIN
         "id": "electrification_substation",
         "fields": {
           "id": "integer",
-          "name": "string"
+          "name": "string",
+          "operator_color": "string",
+          "operator_bright": "string",
+          "owner_color": "string",
+          "owner_bright": "string"
         }
       }
     ]
@@ -1852,30 +1711,23 @@ RETURN (
     ST_AsMVT(tile, 'track_railway_line_low', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
-      gaugeint0,
-      gauge0,
-      track_class,
-      loading_gauge,
-      passenger_lines,
-      max(rank) as rank
-    FROM railway_line_low
-    WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      feature,
-      ref,
-      name,
+      state,
+      usage,
       gauge0,
       gaugeint0,
       track_class,
+      axle_load,
+      metre_load,
       loading_gauge,
       passenger_lines
+    FROM railway_line_low_grouped
+    WHERE way && ST_TileEnvelope(z, x, y)
+      AND feature != 'ferry'
     ORDER by
-      rank NULLS LAST
+      gaugeint0 NULLS FIRST
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -1893,7 +1745,11 @@ DO $do$ BEGIN
           "usage": "string",
           "gauge0": "string",
           "gaugeint0": "number",
-          "passenger_lines": "number"
+          "track_class": "string",
+          "loading_gauge": "string",
+          "passenger_lines": "number",
+          "axle_load": "number",
+          "metre_load": "number"
         }
       }
     ]
@@ -1914,26 +1770,14 @@ RETURN (
     ST_AsMVT(tile, 'operator_railway_line_low', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(st_simplify(st_collect(way), 100000), ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
+      l.id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), extent => 4096, buffer => 64, clip_geom => true) AS way,
       feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
-      operator,
-      any_value(operator_color) as operator_color,
-      any_value(operator_bright) as operator_bright,
-      primary_operator,
-      owner,
-      max(rank) as rank
-    FROM railway_line_low
+      state,
+      operator_color,
+      owner_color
+    FROM railway_line_low_grouped l
     WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      feature,
-      ref,
-      name,
-      operator,
-      primary_operator,
-      owner
     ORDER by
       rank NULLS LAST
   ) as tile
@@ -1950,12 +1794,8 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "usage": "string",
-          "operator": "string",
           "operator_color": "string",
-          "operator_bright": "string",
-          "primary_operator": "string",
-          "owner": "string"
+          "owner_color": "string"
         }
       }
     ]
@@ -1976,29 +1816,14 @@ RETURN (
     ST_AsMVT(tile, 'route_railway_line_low', 4096, 'way')
   FROM (
     SELECT
-      min(id) as id,
-      ST_AsMVTGeom(
-        st_simplify(st_collect(way), 100000),
-        ST_TileEnvelope(z, x, y),
-        4096, 64, true
-      ) as way,
+      id,
+      ST_AsMVTGeom(way, ST_TileEnvelope(z, x, y), 4096, 64, true) as way,
       feature,
-      any_value(state) as state,
-      any_value(usage) as usage,
-      highspeed,
-      (select count(*) from route_line rl join routes r on rl.route_id = r.osm_id where rl.line_id = l.osm_id) as route_count,
-      max(rank) as rank
-    FROM railway_line_low l
+      state,
+      route_count
+    FROM railway_line_low_grouped
     WHERE way && ST_TileEnvelope(z, x, y)
-    GROUP BY
-      l.osm_id,
-      feature,
-      ref,
-      name,
-      highspeed
-    ORDER by
-      route_count NULLS FIRST,
-      rank NULLS LAST
+    ORDER by route_count
   ) as tile
   WHERE way IS NOT NULL
 );
@@ -2013,7 +1838,6 @@ DO $do$ BEGIN
           "id": "string",
           "feature": "string",
           "state": "string",
-          "usage": "string",
           "route_count": "integer"
         }
       }

@@ -106,7 +106,7 @@ jobs:
 
       - name: Start tile server
         run: |
-          docker compose up --detach --no-deps martin
+          docker compose up --wait --no-deps martin
 
       - name: Start proxy
         run: |

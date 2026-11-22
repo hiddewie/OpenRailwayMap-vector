@@ -5,6 +5,7 @@ const signals_railway_line = yaml.parse(fs.readFileSync('train_protection.yaml',
 const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8'))
 const pois = yaml.parse(fs.readFileSync('poi.yaml', 'utf8'))
 const station_references = yaml.parse(fs.readFileSync('stations.yaml', 'utf8')).references
+const track_classes = yaml.parse(fs.readFileSync('track_class.yaml', 'utf8')).track_classes
 
 const trainProtectionTags = [...new Set(signals_railway_line.features.flatMap(feature => feature.tags).map(tag => tag.tag))].toSorted();
 
@@ -59,6 +60,13 @@ local station_references = {${station_references.map(ref => `
   { id = '${ref.id}', description = '${ref.description}'${ref.country ? `, country = '${ref.country}'` : ''}, tags = {${ref.tags.map(tag => `'${tag}'`).join(', ')}} },`).join('')}
 }
 
+local track_class_axle_load = {${track_classes.filter(({axle_load}) => axle_load).map(({value, axle_load}) => `
+  ["${value}"] = ${axle_load},`).join('')}
+}
+local track_class_metre_load = {${track_classes.filter(({metre_load}) => metre_load).map(({value, metre_load}) => `
+  ["${value}"] = ${metre_load},`).join('')}
+}
+
 return {
   train_protection = train_protection,
   signal_tags = signal_tags,
@@ -66,6 +74,8 @@ return {
   poi = poi,
   station_references = station_references,
   map_station_reference = map_station_reference,
+  track_class_axle_load = track_class_axle_load,
+  track_class_metre_load = track_class_metre_load,
 }
 `;
 

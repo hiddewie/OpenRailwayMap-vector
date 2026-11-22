@@ -79,7 +79,7 @@ function update_datafile() {
 
 function reduce_data() {
   # Remove platforms which are not near any railway line, and also not part of any railway route
-  $PSQL -c "delete from platforms p where not exists(select * from routes r where r.platform_ref_ids @> Array[p.osm_id]) and not exists(select * from railway_line l where st_dwithin(p.way, l.way, 20));"
+  $PSQL -c "delete from platforms p where not exists(select rp.platform_id from route_platform rp where rp.platform_id = p.id) and not exists(select * from railway_line l where st_dwithin(p.way, l.way, 20));"
 }
 
 function transform_data() {
@@ -116,6 +116,8 @@ function create_update_functions_views() {
     --style openrailwaymap.lua
   echo " - Clustered stations - "
   $PSQL -f sql/stations_clustered.sql
+  echo " - Grouped railway lines - "
+  $PSQL -f sql/railway_line.sql
 
   # Tile and API views on processed data
   echo " - Tile views - "
@@ -139,6 +141,8 @@ function refresh_materialized_views() {
     --style openrailwaymap.lua
   echo " - Clustered stations - "
   $PSQL -f sql/update_stations_clustered.sql
+  echo " - Grouped railway lines - "
+  $PSQL -f sql/update_railway_line.sql
   echo " - API facility views - "
   $PSQL -f sql/update_api_views.sql
 }

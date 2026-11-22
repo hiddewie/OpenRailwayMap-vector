@@ -50,12 +50,12 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stop_areas = {
-    { way_ref_ids = '{6}', node_ref_ids = '{5}', references = {} },
+    { way_ref_ids = '{6}', node_ref_ids = '{5}' },
   },
   stop_area_platforms = {
-    { platform_id = 2 },
-    { platform_id = 3 },
-    { platform_id = 4 },
+    { platform_id = 'node-2' },
+    { platform_id = 'way-3' },
+    { platform_id = 'relation-4' },
   },
   stop_area_route_stops = {
     { route_stop_id = 1 },
@@ -74,7 +74,7 @@ osm2pgsql.process_relation({
 })
 assert.eq(osm2pgsql.get_and_clear_imported_data(), {
   stop_areas = {
-    { way_ref_ids = '{}', node_ref_ids = '{}', references = {['se-rikshållplats'] = 'rikshållplats'} },
+    { references = {['se-rikshållplats'] = 'rikshållplats'} },
   },
   stop_area_route_stops = {
     { route_stop_id = 1 },
