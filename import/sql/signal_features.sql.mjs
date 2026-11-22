@@ -3,6 +3,12 @@ import yaml from 'yaml'
 
 const signals_railway_signals = yaml.parse(fs.readFileSync('signals_railway_signals.yaml', 'utf8'))
 
+// Separator of the features of one row in the feature value, see generateImage() in proxy/js/ui.js
+const ROW_SEPARATOR = '||'
+
+// Inline features (features[].inline) of one node are drawn side by side, at most this many per row
+const INLINE_ROW_LENGTH = 2
+
 async function promiseResultsOrErrors(promises) {
   const results = await Promise.allSettled(promises);
   if (results.every(it => it.status === 'fulfilled')) {
@@ -297,11 +303,11 @@ CREATE OR REPLACE VIEW signal_features_view AS
           CASE ${signalsWithSignalType.filter(feature => feature.tags.find(it => it.tag === `railway:signal:${column.type}`) && feature.signalSubtype === column.subtype).map(feature => `
             -- ${feature.country ? `(${feature.country}) ` : ''}${feature.description}
             WHEN ${matchFeatureTagsSql(feature.tags)}
-              THEN ${feature.signalType === column.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:deactivated"::text, '${feature.rank}', "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:caption"])` : 'NULL'}
+              THEN ${feature.signalType === column.type ? `array_cat(${featureIconsSql(feature.icon)}, ARRAY[${feature.type ? `'${feature.type}'` : 'NULL'}, "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:deactivated"::text, '${feature.rank}', "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:caption", '${feature.inline === true}'])` : 'NULL'}
             `).join('')}
             -- Unknown signal (${column.type}), left to the subtype columns when a subtype key is present
             ${column.subtype || subtypesOfType[column.type].length === 0 ? 'ELSE' : `WHEN ${subtypesOfType[column.type].map(subtype => `"railway:signal:${column.type}:${subtype}" IS NULL`).join(' AND ')} THEN`}
-              ARRAY['general/signal-unknown-${column.type}', NULL, '17.1', '0', '0', NULL, "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:deactivated"::text, NULL, "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:caption"]
+              ARRAY['general/signal-unknown-${column.type}', NULL, '17.1', '0', '0', NULL, "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:deactivated"::text, NULL, "railway:signal:${column.type}${column.subtype ? `:${column.subtype}` : ''}:caption", 'false']
         END
       END as feature_${column.name}`).join(',')}
     FROM signals s
@@ -321,6 +327,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
       feature_${column.name}[7]::boolean as deactivated,
       feature_${column.name}[8]::INT as rank,
       feature_${column.name}[9] as caption,
+      feature_${column.name}[10]::boolean as inline,
       '${column.category}' as category
     FROM signals_with_features_0
     WHERE feature_${column.name} IS NOT NULL
@@ -337,10 +344,38 @@ CREATE OR REPLACE VIEW signal_features_view AS
       false as deactivated,
       NULL as rank,
       NULL as caption,
+      false as inline,
       'other' as category
     FROM signals_with_features_0
     WHERE railway = 'signal'
       AND ${featureColumns.map(column => `feature_${column.name} IS NULL`).join(' AND ')}
+  ),
+  -- Number the rows of inline features, per deactivation; every other feature is its own row
+  signals_with_features_2 AS (
+    SELECT
+      *,
+      CASE
+        WHEN inline THEN (row_number() OVER (PARTITION BY signal_id, inline, deactivated ORDER BY rank) - 1) / ${INLINE_ROW_LENGTH}
+        ELSE -row_number() OVER (PARTITION BY signal_id ORDER BY rank)
+      END as row_index
+    FROM signals_with_features_1
+  ),
+  -- Merge the features of a row into one feature, drawn side by side
+  signals_with_features_3 AS (
+    SELECT
+      signal_id,
+      string_agg(feature, '${ROW_SEPARATOR}' ORDER BY rank) as feature,
+      MAX(icon_height) as icon_height,
+      CASE
+        WHEN bool_or(type = 'line') THEN 'line'
+        WHEN bool_or(type = 'tram') THEN 'tram'
+      END as type,
+      deactivated,
+      MIN(rank) as rank,
+      (array_agg(category ORDER BY rank))[1] as category,
+      (array_agg(caption ORDER BY rank))[1] as caption
+    FROM signals_with_features_2
+    GROUP BY signal_id, inline, deactivated, row_index
   )
   -- Group features by signal, and aggregate the results
   SELECT
@@ -355,7 +390,7 @@ CREATE OR REPLACE VIEW signal_features_view AS
     array_agg(icon_height ORDER BY rank ASC NULLS LAST) as icon_height,
     MAX(rank) as rank,
     nullif(array_remove(array_agg(caption ORDER BY rank ASC NULLS LAST), null), '{}'::text[]) as caption
-  FROM signals_with_features_1 sf
+  FROM signals_with_features_3 sf
   GROUP BY signal_id;
 
 -- Use the view directly such that the query in the view can be updated
