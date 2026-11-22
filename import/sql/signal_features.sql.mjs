@@ -26,42 +26,10 @@ async function parseSvgDimensions(feature) {
     throw new Error(`Could not find <svg> element with width/height for feature ${feature} in SVG content "${svg}"`)
   }
   return {
-    width: parseFloat(width[1]),
-    height: parseFloat(height[1]),
+    width: parseFloat(matches[1]),
+    height: parseFloat(matches[2]),
   }
 }
-
-// Subtypes of a type (types[].subtypes) are tag keys "railway:signal:<type>:<subtype>"
-// carrying their own signal, so that one node can show a feature per subtype.
-const subtypesOfType = Object.fromEntries(signals_railway_signals.types.map(type => [type.type, type.subtypes ?? []]))
-
-// Declared subtype of a feature for a type, or null
-function featureSubtype(feature, type) {
-  const subtypes = subtypesOfType[type].filter(subtype => feature.tags.some(it => it.tag === `railway:signal:${type}:${subtype}`))
-  if (subtypes.length > 1) {
-    throw new Error(`Feature ${feature.description} has several subtypes of type ${type}: ${subtypes.join(', ')}`)
-  }
-  return subtypes[0] ?? null
-}
-
-// Subtypes must be declared tags drawn by at least one feature
-for (const [type, subtypes] of Object.entries(subtypesOfType)) {
-  for (const subtype of subtypes) {
-    const tag = `railway:signal:${type}:${subtype}`
-    if (!signals_railway_signals.tags.some(it => it.tag === tag)) {
-      throw new Error(`Subtype ${subtype} of type ${type}: tag ${tag} is not declared`)
-    }
-    if (!signals_railway_signals.features.some(feature => feature.tags.some(it => it.tag === tag))) {
-      throw new Error(`Subtype ${subtype} of type ${type}: no feature uses tag ${tag}`)
-    }
-  }
-}
-
-// One feature column per type, plus one per subtype
-const featureColumns = signals_railway_signals.types.flatMap(type => [
-  { ...type, subtype: null, name: type.type },
-  ...(type.subtypes ?? []).map(subtype => ({ ...type, subtype, name: `${type.type}__${subtype}` })),
-])
 
 // Subtypes of a type (types[].subtypes) are tag keys "railway:signal:<type>:<subtype>"
 // carrying their own signal, so that one node can show a feature per subtype.
