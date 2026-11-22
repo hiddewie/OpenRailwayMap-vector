@@ -669,7 +669,6 @@ const sources = {
     type: 'vector',
     url: '/railway_line_high,railway_text_km',
     promoteId: 'id',
-    encoding: 'mlt',
   },
   openrailwaymap_stations: {
     type: 'vector',
