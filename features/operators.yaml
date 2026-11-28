@@ -2370,6 +2370,36 @@ operators:
       - 'การรถไฟแห่งประเทศไทย'
     color: '#782325'
 
+  - country: TH
+    names:
+      - 'ระบบขนส่งมวลชนกรุงเทพ'
+    color: '#41a633'
+
+  - country: TH
+    names:
+      - 'ทางด่วนและรถไฟฟ้ากรุงเทพ'
+    color: '#132157'
+
+  - country: TH
+    names:
+      - 'กรุงเทพธนาคม'
+    color: '#2d693c'
+
+  - country: TH
+    names:
+      - 'นอร์ทเทิร์นบางกอกโมโนเรล'
+    color: '#c06080'
+
+  - country: TH
+    names:
+      - 'อีสเทิร์นบางกอกโมโนเรล'
+    color: '#f0dc48'
+
+  - country: TH
+    names:
+      - 'เอเชียเอราวัน'
+    color: '#77dca8'
+
   # --- TN --- #
 
   - country: TN
