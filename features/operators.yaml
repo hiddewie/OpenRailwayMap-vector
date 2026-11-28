@@ -2387,11 +2387,6 @@ operators:
 
   - country: TH
     names:
-      - 'กรุงเทพธนาคม'
-    color: '#2d693c'
-
-  - country: TH
-    names:
       - 'นอร์ทเทิร์นบางกอกโมโนเรล'
     color: '#c06080'
 
@@ -2404,7 +2399,7 @@ operators:
     names:
       - 'เอเชียเอราวัน'
     color: '#77dca8'
-    
+
   # --- TN --- #
 
   - country: TN
